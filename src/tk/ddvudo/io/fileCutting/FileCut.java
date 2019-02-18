@@ -1,4 +1,4 @@
-package tk.ddvudo.fileCutting;
+package tk.ddvudo.io.fileCutting;
 
 import java.io.File;
 import java.io.FileInputStream;

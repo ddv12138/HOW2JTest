@@ -1,4 +1,4 @@
-package tk.ddvudo.ObjectStream;
+package tk.ddvudo.io.ObjectStream;
 
 import java.io.Serializable;
 

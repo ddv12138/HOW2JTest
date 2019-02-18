@@ -1,4 +1,4 @@
-package tk.ddvudo.fileEncyption;
+package tk.ddvudo.io.FileEncyption;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -8,9 +8,9 @@ import java.io.IOException;
 
 public class FileEncy {
 	public static void main(String[] args) {
-		File old = new File("./src/tk/ddvudo/fileEncyption/TestFile");
-		File newFile = new File("./src/tk/ddvudo/fileEncyption/TestFileEncyption");
-		File decodeFile = new File("./src/tk/ddvudo/fileEncyption/TestFileDecode");
+		File old = new File("./src/tk/ddvudo/FileEncyption/TestFile");
+		File newFile = new File("./src/tk/ddvudo/FileEncyption/TestFileEncyption");
+		File decodeFile = new File("./src/tk/ddvudo/FileEncyption/TestFileDecode");
 		encodeFile(old, newFile);
 		decodeFile(newFile, decodeFile);
 	}

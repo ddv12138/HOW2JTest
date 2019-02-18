@@ -1,4 +1,4 @@
-package tk.ddvudo.DataStream;
+package tk.ddvudo.io.DataStream;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;

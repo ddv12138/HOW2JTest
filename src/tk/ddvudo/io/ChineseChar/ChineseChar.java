@@ -1,4 +1,4 @@
-package tk.ddvudo.ChineseChar;
+package tk.ddvudo.io.ChineseChar;
 
 import java.io.File;
 import java.io.FileInputStream;
