@@ -2,15 +2,23 @@ package tk.ddvudo.io.finalTest;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class Answer {
 	public static void main(String... args) throws IOException {
-		Answer.getInstance().fileFolderCopy(new File("./src/tk/ddvudo/io/finalTest/source/TestSource"),
-				new File("./src/tk/ddvudo/io/finalTest/target"));
+//		Answer.getInstance().fileFolderCopy(new File("./src/tk/ddvudo/io/finalTest/source"),
+//				new File("./src/tk/ddvudo/io/finalTest/target"));
+		ArrayList<File> res = new ArrayList<>();
+		Answer.getInstance().filesearch(new File("E:\\workspace-myself\\HOW2JTest\\src"), "ddv",res);
+		for(File f : res) {
+			System.out.println(f.getAbsolutePath());
+		}
 	}
 
 	private static Answer answer = new Answer();
@@ -22,11 +30,39 @@ public class Answer {
 	private Answer() {
 	}
 
+	public void filesearch(File f, String keyword,ArrayList<File> res) throws IOException {
+		File[] tmplist = f.listFiles();
+		for (File file : tmplist) {
+			if (file.isDirectory()) {
+				filesearch(file, keyword,res);
+			} else {
+				if(singleFileSearch(file, keyword)) {
+					res.add(file);
+				}
+			}
+		}
+	}
+
+	private boolean singleFileSearch(File file, String keyword) throws IOException {
+		if (file.getName().split("\\.").length > 1
+				&& file.getName().split("\\.")[file.getName().split("\\.").length - 1].toLowerCase().equals("java")) {
+			try (FileReader fr = new FileReader(file); BufferedReader br = new BufferedReader(fr);) {
+				String tmp = "";
+				while (null != (tmp = br.readLine())) {
+					if (tmp.toLowerCase().indexOf(keyword.toLowerCase()) > -1) {
+						return true;
+					}
+				}
+			}
+		}
+		return false;
+	}
+
 	public boolean fileCopy(File source, File target) throws IOException {
 		if (!source.exists()) {
 			throw new IOException("源文件不存在");
 		}
-		FileCheck(target);
+		FileCheck(target, source.isDirectory());
 		try (FileInputStream fis = new FileInputStream(source);
 				BufferedInputStream bis = new BufferedInputStream(fis);
 				FileOutputStream fos = new FileOutputStream(target);
@@ -47,25 +83,27 @@ public class Answer {
 		while (!source.isDirectory()) {
 			source = source.getParentFile();
 		}
-		while (!target.isDirectory()) {
-			target = target.getParentFile();
-		}
-		FileCheck(target);
+		FileCheck(target, source.isDirectory());
 		File[] list = source.listFiles();
 		for (File f : list) {
 			if (f.isDirectory()) {
-				fileFolderCopy(f, new File(target, f.getName()));
+				return fileFolderCopy(f, new File(target, f.getName()));
 			} else {
-				fileCopy(f, new File(target, f.getName()));
+				return fileCopy(f, new File(target, f.getName()));
 			}
 		}
 		return false;
 	}
 
-	public boolean FileCheck(File f) throws IOException {
+	public boolean FileCheck(File f, boolean isdir) throws IOException {
 		if (!f.exists() || (f.exists() && f.isDirectory())) {
-			f.getParentFile().mkdirs();
+			if (isdir) {
+				return f.mkdirs();
+			} else {
+				f.getParentFile().mkdirs();
+				return f.createNewFile();
+			}
 		}
-		return f.createNewFile();
+		return false;
 	}
 }
