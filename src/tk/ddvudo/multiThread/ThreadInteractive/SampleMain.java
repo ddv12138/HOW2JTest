@@ -6,7 +6,7 @@ public class SampleMain {
 		MyStack stack = new MyStack();
 		synchronized (stack) {
 			for(int i=0;i<3;i++) {
-				new Producer(stack,300).start();
+				new Producer(stack,100).start();
 			}
 		}
 		synchronized (stack) {
