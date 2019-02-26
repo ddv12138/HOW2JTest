@@ -13,12 +13,6 @@ public class MyStack {
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}finally {
-			try {
-				Thread.sleep(10);
-			} catch (InterruptedException e) {
-				// TODO 自动生成的 catch 块
-				e.printStackTrace();
-			}
 			this.notifyAll();
 		}
 		return list.removeLast();
@@ -33,12 +27,6 @@ public class MyStack {
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}finally {
-			try {
-				Thread.sleep(10);
-			} catch (InterruptedException e) {
-				// TODO 自动生成的 catch 块
-				e.printStackTrace();
-			}
 			this.notifyAll();
 		}
 	}
