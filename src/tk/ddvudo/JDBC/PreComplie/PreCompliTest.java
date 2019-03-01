@@ -7,22 +7,38 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
 
 public class PreCompliTest {
 
 	public static void main(String[] args) throws ClassNotFoundException {
 		Class.forName("com.mysql.cj.jdbc.Driver");
-		String sql = "select * From mytable";
+		String sql = "select * From mytable limit 10";
 		try (Connection c = DriverManager.getConnection("jdbc:mysql://ddvudo.tk:3306/mysql?characterEncoding=UTF-8",
-				"root", "liukang951006");
-				PreparedStatement ps = c.prepareStatement(sql);) {
-//			ResultSet rs = ps.executeQuery();
-//			while(rs.next()) {
-//				System.out.println(rs.getString("id")+"---"+rs.getString("name")+"---"+rs.getString("age")+"---"+rs.getString("gender"));
-//			}
-			// 查看数据库层面的元数据
-            // 即数据库服务器版本，驱动版本，都有哪些数据库等等
-  
+				"root", "liukang951006"); PreparedStatement ps = c.prepareStatement(sql);) {
+			ResultSet rs = ps.executeQuery();
+			System.out.println("即将删除以下数据:");
+			List<String> idlist = new ArrayList<>();
+			while (rs.next()) {
+				idlist.add(rs.getString("id"));
+				System.out.println(rs.getString("id") + "---" + rs.getString("name") + "---" + rs.getString("age")
+						+ "---" + rs.getString("gender"));
+			}
+			try (Scanner s = new Scanner(System.in);) {
+				System.out.println("是否删除以上数据[Y/N]");
+				String sign = s.nextLine();
+				if(sign.equals("Y")) {
+					c.setAutoCommit(false);
+					for(String tmpid:idlist) {
+						String delsql = "delete from mytable where id = '"+tmpid+"'";
+						ps.execute(delsql);
+					}
+				}
+			}finally {
+				c.commit();
+			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -31,25 +47,25 @@ public class PreCompliTest {
 	@SuppressWarnings("unused")
 	private static void getDataBaseMetaData() throws SQLException {
 		try (Connection c = DriverManager.getConnection("jdbc:mysql://ddvudo.tk:3306/mysql?characterEncoding=UTF-8",
-				"root", "liukang951006");){
+				"root", "liukang951006");) {
 			DatabaseMetaData dbmd = c.getMetaData();
-			  
-	        // 获取数据库服务器产品名称
-	        System.out.println("数据库产品名称:\t"+dbmd.getDatabaseProductName());
-	        // 获取数据库服务器产品版本号
-	        System.out.println("数据库产品版本:\t"+dbmd.getDatabaseProductVersion());
-	        // 获取数据库服务器用作类别和表名之间的分隔符 如test.user
-	        System.out.println("数据库和表分隔符:\t"+dbmd.getCatalogSeparator());
-	        // 获取驱动版本
-	        System.out.println("驱动版本:\t"+dbmd.getDriverVersion());
 
-	        System.out.println("可用的数据库列表：");
-	        // 获取数据库名称
-	        ResultSet rs = dbmd.getCatalogs();
+			// 获取数据库服务器产品名称
+			System.out.println("数据库产品名称:\t" + dbmd.getDatabaseProductName());
+			// 获取数据库服务器产品版本号
+			System.out.println("数据库产品版本:\t" + dbmd.getDatabaseProductVersion());
+			// 获取数据库服务器用作类别和表名之间的分隔符 如test.user
+			System.out.println("数据库和表分隔符:\t" + dbmd.getCatalogSeparator());
+			// 获取驱动版本
+			System.out.println("驱动版本:\t" + dbmd.getDriverVersion());
 
-	        while (rs.next()) {
-	            System.out.println("数据库名称:\t"+rs.getString(1));
-	        }
+			System.out.println("可用的数据库列表：");
+			// 获取数据库名称
+			ResultSet rs = dbmd.getCatalogs();
+
+			while (rs.next()) {
+				System.out.println("数据库名称:\t" + rs.getString(1));
+			}
 		}
 	}
 
@@ -80,7 +96,7 @@ public class PreCompliTest {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
+
 	}
 
 	public static ResultSet list(int start, int count) throws ClassNotFoundException {
