@@ -11,49 +11,49 @@ import java.util.concurrent.TimeUnit;
 
 public class Server {
 
-	public static void main(String[] args) {
-		try{
-			ServerSocket server = new ServerSocket(1234);
-			Socket s = server.accept();
-			Thread seerverThread = new Thread(new Runnable() {
-				public void run() {
-					try {
-			            DataInputStream dis = new DataInputStream(s.getInputStream());
-			            while (true) {
-			                String msg = dis.readUTF();
-			                System.out.println(msg);
-			            }
-			        } catch (Exception e) {
-			            e.printStackTrace();
-			        }
-				}
-			});
-			Thread clientThread = new Thread(new Runnable() {
-				public void run() {
-					Scanner sc = new Scanner(System.in);
-					try {
-			            DataOutputStream dos = new DataOutputStream(s.getOutputStream());
-			 
-			            while(true){
-			                String str = sc.next();
-			                dos.writeUTF(str);
-			            }
-			        } catch (Exception e) {
-			            e.printStackTrace();
-			        }finally {
-			        	sc.close();
-					}
-				}
-			});
-			ThreadPoolExecutor tpe = new ThreadPoolExecutor(2, 2, 1, TimeUnit.SECONDS, new LinkedBlockingQueue<>());
-			tpe.execute(seerverThread);
-			tpe.execute(clientThread);
-			while(tpe.isTerminated()) {
-				server.close();
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
+    public static void main(String[] args) {
+        try {
+            ServerSocket server = new ServerSocket(1234);
+            Socket s = server.accept();
+            Thread seerverThread = new Thread(new Runnable() {
+                public void run() {
+                    try {
+                        DataInputStream dis = new DataInputStream(s.getInputStream());
+                        while (true) {
+                            String msg = dis.readUTF();
+                            System.out.println(msg);
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+            Thread clientThread = new Thread(new Runnable() {
+                public void run() {
+                    Scanner sc = new Scanner(System.in);
+                    try {
+                        DataOutputStream dos = new DataOutputStream(s.getOutputStream());
+
+                        while (true) {
+                            String str = sc.next();
+                            dos.writeUTF(str);
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    } finally {
+                        sc.close();
+                    }
+                }
+            });
+            ThreadPoolExecutor tpe = new ThreadPoolExecutor(2, 2, 1, TimeUnit.SECONDS, new LinkedBlockingQueue<>());
+            tpe.execute(seerverThread);
+            tpe.execute(clientThread);
+            while (tpe.isTerminated()) {
+                server.close();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
 }

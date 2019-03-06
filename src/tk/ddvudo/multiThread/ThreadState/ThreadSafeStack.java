@@ -5,31 +5,31 @@ import java.util.Random;
 
 public class ThreadSafeStack {
 
-	LinkedList<String> heros = new LinkedList<String>();
+    LinkedList<String> heros = new LinkedList<String>();
 
-	public synchronized void push(String h) {
-		heros.addLast(h);
-	}
+    public static void main(String[] args) {
 
-	public synchronized String pull() {
-		return heros.removeLast();
-	}
+        ThreadSafeStack heroStack = new ThreadSafeStack();
+        for (int i = 0; i < 5; i++) {
+            String s = new Random().nextInt(10000) + "";
+            System.out.println("压入 hero:" + s);
+            heroStack.push(s);
+        }
+        for (int i = 0; i < 5; i++) {
+            System.out.println("弹出 hero:" + heroStack.pull());
+        }
+    }
 
-	public synchronized String peek() {
-		return heros.getLast();
-	}
+    public synchronized void push(String h) {
+        heros.addLast(h);
+    }
 
-	public static void main(String[] args) {
+    public synchronized String pull() {
+        return heros.removeLast();
+    }
 
-		ThreadSafeStack heroStack = new ThreadSafeStack();
-		for (int i = 0; i < 5; i++) {
-			String s = new String(new Random().nextInt(10000) + "");
-			System.out.println("压入 hero:" + s);
-			heroStack.push(s);
-		}
-		for (int i = 0; i < 5; i++) {
-			System.out.println("弹出 hero:" + heroStack.pull());
-		}
-	}
+    public synchronized String peek() {
+        return heros.getLast();
+    }
 
 }
