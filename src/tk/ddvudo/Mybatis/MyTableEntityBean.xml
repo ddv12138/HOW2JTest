@@ -5,6 +5,7 @@
 
 <mapper namespace="tk.ddvudo.Mybatis">
     <select id="listMytable" resultType="MytableEntityBean">
-        select * from mytable
+        select *
+        from mytable
     </select>
 </mapper>

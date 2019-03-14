@@ -19,5 +19,7 @@
     </environments>
     <mappers>
         <mapper resource="tk/ddvudo/Mybatis/MyTableEntityBean.xml"/>
+        <mapper resource="tk/ddvudo/Mybatis/DictionaryBean.xml"/>
+        <mapper resource="tk/ddvudo/Mybatis/CategoryBean.xml"/>
     </mappers>
 </configuration>
