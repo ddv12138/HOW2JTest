@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="tk.ddvudo.Mybatis">
+    <insert id="addProduct" parameterType="Product">
+        insert into Product (id, name)
+        values (#{id}, #{name})
+    </insert>
+
+    <delete id="deleteProduct" parameterType="Product">
+        delete
+        from Product
+        where id = #{id}
+    </delete>
+
+    <select id="getProduct" parameterType="string" resultType="Product">
+        select *
+        from Product
+        where id = #{0}
+    </select>
+
+    <update id="updateProduct" parameterType="Product">
+        update Product
+        set name=#{name}
+        where id = #{id}
+    </update>
+    <select id="listProduct" resultType="Product">
+        select *
+        from Product
+    </select>
+</mapper>

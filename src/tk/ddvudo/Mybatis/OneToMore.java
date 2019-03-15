@@ -6,6 +6,7 @@ import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
 import java.io.IOException;
+import java.util.List;
 
 public class OneToMore {
     public static void main(String... args) {
@@ -15,10 +16,15 @@ public class OneToMore {
         try {
             sqlSessionFactory = new SqlSessionFactoryBuilder().build(Resources.getResourceAsStream(resource));
             session = sqlSessionFactory.openSession();
-            Category c1 = new Category("分类一");
-            Category c2 = new Category("分类二");
-            System.out.println(session.insert("addCategory", c1));
-            System.out.println(session.insert("addCategory", c2));
+            List<Category> cs = session.selectList("listCategory");
+            for (Category c : cs) {
+                System.out.println(c);
+                List<Product> ps = c.getProducts();
+                if (null == ps) continue;
+                for (Product p : ps) {
+                    System.out.println("\t" + p);
+                }
+            }
             session.commit();
         } catch (IOException e) {
             e.printStackTrace();

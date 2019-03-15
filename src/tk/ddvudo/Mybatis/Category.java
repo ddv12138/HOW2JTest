@@ -1,21 +1,11 @@
 package tk.ddvudo.Mybatis;
 
-import java.util.UUID;
+import java.util.List;
 
 public class Category {
-    String id;
-    String name;
-
-    public Category(String id, String name) {
-        this.id = id;
-        this.name = name;
-    }
-
-    public Category(String name) {
-        this.id = UUID.randomUUID().toString().replaceAll("-", "");
-        System.out.println(this.id);
-        this.name = name;
-    }
+    private String id;
+    private String name;
+    private List<Product> products;
 
     public String getId() {
         return id;
@@ -33,11 +23,16 @@ public class Category {
         this.name = name;
     }
 
+    public List<Product> getProducts() {
+        return products;
+    }
+
     @Override
     public String toString() {
         return "Category{" +
                 "id='" + id + '\'' +
                 ", name='" + name + '\'' +
+                ", products=" + products +
                 '}';
     }
 }
