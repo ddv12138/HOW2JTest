@@ -24,18 +24,15 @@
         where id = #{id}
     </update>
     <resultMap type="Category" id="categoryBean">
-        <id column="cid" property="id" jdbcType="VARCHAR"/>
-        <result column="cname" property="name" jdbcType="VARCHAR"/>
+        <id column="id" property="cid" jdbcType="VARCHAR"/>
+        <result column="name" property="cname" jdbcType="VARCHAR"/>
 
-        <!-- 一对多的关系 -->
-        <!-- property: 指的是集合属性的值, ofType：指的是集合中元素的类型 -->
         <collection property="products" ofType="Product" column="cid">
             <id column="pid" property="id" jdbcType="VARCHAR"/>
             <result column="pname" property="name" jdbcType="VARCHAR"/>
             <result column="price" property="price"/>
         </collection>
     </resultMap>
-    <!-- 关联查询分类和产品表 -->
     <select id="listCategory" resultMap="categoryBean">
         select c.id "cid", p.id "pid", c.name "cname", p.name "pname"
         from Category c
