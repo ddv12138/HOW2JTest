@@ -23,18 +23,22 @@
         set name=#{name}
         where id = #{id}
     </update>
-    <resultMap type="Category" id="categoryBean">
-        <id column="id" property="cid" jdbcType="VARCHAR"/>
-        <result column="name" property="cname" jdbcType="VARCHAR"/>
+    <resultMap type="tk.ddvudo.Mybatis.Category" id="categoryBean">
+        <id property="id" column="c_id"/>
+        <result property="name" column="c_name"/>
 
-        <collection property="products" ofType="Product" column="cid">
-            <id column="pid" property="id" jdbcType="VARCHAR"/>
-            <result column="pname" property="name" jdbcType="VARCHAR"/>
-            <result column="price" property="price"/>
+        <collection property="products" column="p_id" ofType="tk.ddvudo.Mybatis.Product">
+            <id property="id" column="p_id"/>
+            <result property="name" column="p_name"/>
+            <result property="price" column="p_price"/>
         </collection>
     </resultMap>
     <select id="listCategory" resultMap="categoryBean">
-        select c.id "cid", p.id "pid", c.name "cname", p.name "pname"
+        select c.id    as c_id,
+               c.name  as c_name,
+               p.id    as p_id,
+               p.name  as p_name,
+               p.price as p_price
         from Category c
                  left join Product p on c.id = p.cid
     </select>
