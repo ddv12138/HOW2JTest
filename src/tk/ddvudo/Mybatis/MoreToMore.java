@@ -4,31 +4,24 @@ import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
-import tk.ddvudo.Mybatis.JavaBeans.Category;
+import tk.ddvudo.Mybatis.JavaBeans.Order;
 
-import java.io.IOException;
 import java.util.List;
 
-public class OneToMore {
+public class MoreToMore {
     public static void main(String... args) {
         String resource = "mybatis-config.xml";
         SqlSessionFactory sqlSessionFactory;
-        SqlSession session = null;
         try {
             sqlSessionFactory = new SqlSessionFactoryBuilder().build(Resources.getResourceAsStream(resource));
-            session = sqlSessionFactory.openSession();
-            List<Category> cs = session.selectList("listCategory");
-            for (Category c : cs) {
-                System.out.println(c);
+            try (SqlSession session = sqlSessionFactory.openSession()) {
+                List<Order> orders = session.selectList("listOrder");
+                System.out.println(orders);
+            } catch (Exception e) {
+                throw e;
             }
-            session.commit();
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
-            session.rollback();
-        } finally {
-            if (null != session) {
-                session.close();
-            }
         }
     }
 }

@@ -23,10 +23,10 @@
         set name=#{name}
         where id = #{id}
     </update>
-    <resultMap type="tk.ddvudo.Mybatis.Category" id="categoryBean">
+    <resultMap type="tk.ddvudo.Mybatis.JavaBeans.Category" id="categoryBean">
         <id property="id" column="c_id"/>
         <result property="name" column="c_name"/>
-        <collection property="products" ofType="tk.ddvudo.Mybatis.Product">
+        <collection property="products" ofType="tk.ddvudo.Mybatis.JavaBeans.Product">
             <id property="id" column="p_id"/>
             <result property="cid" column="c_id"/>
             <result property="name" column="p_name"/>

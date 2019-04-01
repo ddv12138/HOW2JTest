@@ -11,16 +11,19 @@
             <transactionManager type="JDBC"/>
             <dataSource type="POOLED">
                 <property name="driver" value="com.mysql.cj.jdbc.Driver"/>
-                <property name="url" value="jdbc:mysql://ddvudo.tk:3306/mysql?characterEncoding=UTF-8"/>
-                <property name="username" value="root"/>
-                <property name="password" value="liukang951006"/>
+                <property name="url"
+                          value="jdbc:mysql://ddvudo.tk:3306/how2jdb?characterEncoding=UTF-8&amp;autoReconnect=true&amp;failOverReadOnly=false&amp;allowMultiQueries=true"/>
+                <property name="username" value="how2j"/>
+                <property name="password" value="liukang"/>
             </dataSource>
         </environment>
     </environments>
     <mappers>
-        <mapper resource="tk/ddvudo/Mybatis/beanXmlConfig/MyTableEntityBean.xml"/>
-        <mapper resource="tk/ddvudo/Mybatis/beanXmlConfig/DictionaryBean.xml"/>
-        <mapper resource="tk/ddvudo/Mybatis/beanXmlConfig/CategoryBean.xml"/>
-        <mapper resource="tk/ddvudo/Mybatis/beanXmlConfig/ProductBean.xml"/>
+        <mapper resource="tk/ddvudo/Mybatis/beanXmlConfig/MyTable.xml"/>
+        <mapper resource="tk/ddvudo/Mybatis/beanXmlConfig/Dictionary.xml"/>
+        <mapper resource="tk/ddvudo/Mybatis/beanXmlConfig/Category.xml"/>
+        <mapper resource="tk/ddvudo/Mybatis/beanXmlConfig/Product.xml"/>
+        <mapper resource="tk/ddvudo/Mybatis/beanXmlConfig/Order.xml"/>
+        <mapper resource="tk/ddvudo/Mybatis/beanXmlConfig/OrderItem.xml"/>
     </mappers>
 </configuration>

@@ -1,4 +1,4 @@
-package tk.ddvudo.Mybatis;
+package tk.ddvudo.Mybatis.JavaBeans;
 
 public class dictionary {
     int id;
@@ -8,6 +8,19 @@ public class dictionary {
     public dictionary(String receive, String response) {
         this.receive = receive;
         this.response = response;
+    }
+
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("{");
+        sb.append("\"id\":")
+                .append(id);
+        sb.append(",\"receive\":\"")
+                .append(receive).append('\"');
+        sb.append(",\"response\":\"")
+                .append(response).append('\"');
+        sb.append('}');
+        return sb.toString();
     }
 
     public dictionary() {
@@ -38,12 +51,4 @@ public class dictionary {
         this.response = response;
     }
 
-    @Override
-    public String toString() {
-        return "dictionary{" +
-                "id=" + id +
-                ", receive='" + receive + '\'' +
-                ", response='" + response + '\'' +
-                '}';
-    }
 }

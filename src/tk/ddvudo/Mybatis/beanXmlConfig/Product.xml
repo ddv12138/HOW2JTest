@@ -16,9 +16,10 @@
     </delete>
 
     <select id="getProduct" parameterType="string" resultType="Product">
-        select *
-        from Product
-        where id = #{0}
+        select c.*, p.*, c.id 'cid', p.id 'pid', c.name 'cname', p.name 'pname'
+        from Category c
+                 left join Product p on c.id = p.cid
+        where p.id = #{id}
     </select>
 
     <update id="updateProduct" parameterType="Product">
@@ -27,11 +28,11 @@
             cid = #{category.id}
         where id = #{id}
     </update>
-    <resultMap type="tk.ddvudo.Mybatis.Product" id="productBean">
+    <resultMap type="tk.ddvudo.Mybatis.JavaBeans.Product" id="productBean">
         <id column="p_id" property="id"/>
         <result column="p_name" property="name"/>
         <result column="p_price" property="price"/>
-        <association property="category" javaType="tk.ddvudo.Mybatis.Category">
+        <association property="category" javaType="tk.ddvudo.Mybatis.JavaBeans.Category">
             <id column="c_id" property="id"/>
             <result column="c_name" property="name"/>
         </association>
