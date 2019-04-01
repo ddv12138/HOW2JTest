@@ -26,8 +26,7 @@
     <resultMap type="tk.ddvudo.Mybatis.Category" id="categoryBean">
         <id property="id" column="c_id"/>
         <result property="name" column="c_name"/>
-
-        <collection property="products" column="p_id" ofType="tk.ddvudo.Mybatis.Product">
+        <collection property="products" ofType="tk.ddvudo.Mybatis.Product">
             <id property="id" column="p_id"/>
             <result property="name" column="p_name"/>
             <result property="price" column="p_price"/>
@@ -39,7 +38,8 @@
                p.id    as p_id,
                p.name  as p_name,
                p.price as p_price
-        from Category c
-                 left join Product p on c.id = p.cid
+        from Category c,
+             Product p
+        where c.id = p.cid
     </select>
 </mapper>
