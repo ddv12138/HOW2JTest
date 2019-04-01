@@ -5,34 +5,25 @@ import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
-import java.io.IOException;
 import java.util.List;
 
-public class OneToMore {
+public class MoreToOne {
     public static void main(String... args) {
         String resource = "mybatis-config.xml";
         SqlSessionFactory sqlSessionFactory;
-        SqlSession session = null;
         try {
             sqlSessionFactory = new SqlSessionFactoryBuilder().build(Resources.getResourceAsStream(resource));
-            session = sqlSessionFactory.openSession();
-            List<Category> cs = session.selectList("listCategory");
-            for (Category c : cs) {
-                System.out.println(c);
-                List<Product> ps = c.getProducts();
-                if (null == ps) continue;
+            try (SqlSession session = sqlSessionFactory.openSession()) {
+                List<Product> ps = session.selectList("listProduct");
                 for (Product p : ps) {
-                    System.out.println("\t" + p);
+                    System.out.println(p);
                 }
+                session.commit();
+            } catch (Exception e) {
+                throw e;
             }
-            session.commit();
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
-            session.rollback();
-        } finally {
-            if (null != session) {
-                session.close();
-            }
         }
     }
 }

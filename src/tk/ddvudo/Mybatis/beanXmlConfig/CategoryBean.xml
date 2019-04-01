@@ -28,6 +28,7 @@
         <result property="name" column="c_name"/>
         <collection property="products" ofType="tk.ddvudo.Mybatis.Product">
             <id property="id" column="p_id"/>
+            <result property="cid" column="c_id"/>
             <result property="name" column="p_name"/>
             <result property="price" column="p_price"/>
         </collection>
