@@ -6,16 +6,21 @@ import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import tk.ddvudo.Mybatis.JavaBeans.Order;
 
-public class OrderDelete {
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+
+public class IfTag {
     public static void main(String... args) {
         String resource = "mybatis-config.xml";
         SqlSessionFactory sqlSessionFactory;
         try {
             sqlSessionFactory = new SqlSessionFactoryBuilder().build(Resources.getResourceAsStream(resource));
             try (SqlSession session = sqlSessionFactory.openSession()) {
-                Order o = session.selectOne("getOrder", "3");
-                System.out.println(session.delete("deleteOrder", o));
-                session.commit();
+                Map<String, Object> par = new LinkedHashMap<>();
+                par.put("oid", "1");
+                List<Order> orders = session.selectList("listOrder", par);
+                System.out.println(orders);
             } catch (Exception e) {
                 throw e;
             }

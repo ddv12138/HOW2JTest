@@ -20,8 +20,14 @@
     <select id="listOrder" resultMap="orderBean">
         select o.id 'oid', o.code, oi.id 'oiid', oi.number, p.id 'pid', p.name 'pname', p.price
         from `order` o
-                 left join order_item oi on o.id = oi.oid
-                 left join Product p on p.id = oi.pid
+        left join order_item oi on o.id = oi.oid
+        left join Product p on p.id = oi.pid
+        <if test="oid!=null">
+            where oid = #{oid}
+        </if>
+        <if test="pid!=null">
+            where pid = #{pid}
+        </if>
     </select>
 
     <select id="getOrder" resultMap="orderBean" parameterType="string">
