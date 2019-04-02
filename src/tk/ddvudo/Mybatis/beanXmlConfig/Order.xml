@@ -21,12 +21,12 @@
         select o.id 'oid', o.code, oi.id 'oiid', oi.number, p.id 'pid', p.name 'pname', p.price
         from `order` o
         left join order_item oi on o.id = oi.oid
-        left join Product p on p.id = oi.pid
+        left join Product p on p.id = oi.pid where 1=1
         <if test="oid!=null">
-            where oid = #{oid}
+            and oid = #{oid}
         </if>
         <if test="pid!=null">
-            where pid = #{pid}
+            and pid = #{pid}
         </if>
     </select>
 

@@ -19,6 +19,7 @@ public class IfTag {
             try (SqlSession session = sqlSessionFactory.openSession()) {
                 Map<String, Object> par = new LinkedHashMap<>();
                 par.put("oid", "1");
+                par.put("pid", "2");
                 List<Order> orders = session.selectList("listOrder", par);
                 System.out.println(orders);
             }
