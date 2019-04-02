@@ -21,8 +21,6 @@ public class IfTag {
                 par.put("oid", "1");
                 List<Order> orders = session.selectList("listOrder", par);
                 System.out.println(orders);
-            } catch (Exception e) {
-                throw e;
             }
         } catch (Exception e) {
             e.printStackTrace();
