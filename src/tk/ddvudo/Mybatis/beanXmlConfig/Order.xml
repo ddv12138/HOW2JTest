@@ -21,13 +21,15 @@
         select o.id 'oid', o.code, oi.id 'oiid', oi.number, p.id 'pid', p.name 'pname', p.price
         from `order` o
         left join order_item oi on o.id = oi.oid
-        left join Product p on p.id = oi.pid where 1=1
-        <if test="oid!=null">
-            and oid = #{oid}
-        </if>
-        <if test="pid!=null">
-            and pid = #{pid}
-        </if>
+        left join Product p on p.id = oi.pid
+        <where>
+            <if test="oid!=null">
+                and oid = #{oid}
+            </if>
+            <if test="pid!=null">
+                and pid = #{pid}
+            </if>
+        </where>
     </select>
 
     <select id="getOrder" resultMap="orderBean" parameterType="string">

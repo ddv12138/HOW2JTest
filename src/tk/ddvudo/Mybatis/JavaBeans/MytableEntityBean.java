@@ -1,4 +1,4 @@
-package tk.ddvudo.Mybatis;
+package tk.ddvudo.Mybatis.JavaBeans;
 
 class MytableEntityBean {
     private int id;

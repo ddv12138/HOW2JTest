@@ -1,20 +1,24 @@
-package tk.ddvudo.Mybatis;
+package tk.ddvudo.Mybatis.UseXml;
 
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
-import tk.ddvudo.Mybatis.JavaBeans.Order;
+import tk.ddvudo.Mybatis.JavaBeans.Product;
 
-public class OrderDelete {
+import java.util.List;
+
+public class MoreToOne {
     public static void main(String... args) {
         String resource = "mybatis-config.xml";
         SqlSessionFactory sqlSessionFactory;
         try {
             sqlSessionFactory = new SqlSessionFactoryBuilder().build(Resources.getResourceAsStream(resource));
             try (SqlSession session = sqlSessionFactory.openSession()) {
-                Order o = session.selectOne("getOrder", "3");
-                System.out.println(session.delete("deleteOrder", o));
+                List<Product> ps = session.selectList("listProduct");
+                for (Product p : ps) {
+                    System.out.println(p);
+                }
                 session.commit();
             } catch (Exception e) {
                 throw e;

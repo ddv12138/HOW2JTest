@@ -1,4 +1,4 @@
-package tk.ddvudo.Mybatis;
+package tk.ddvudo.Mybatis.UseXml;
 
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
