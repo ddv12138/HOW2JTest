@@ -1,5 +1,6 @@
 package tk.ddvudo.Mybatis.UseAnnotation;
 
+
 import org.apache.ibatis.annotations.*;
 import tk.ddvudo.Mybatis.JavaBeans.Category;
 
@@ -22,7 +23,7 @@ public interface CategoryMapper {
     @Results({
             @Result(property = "id", column = "id"),
             @Result(property = "name", column = "name"),
-            @Result(property = "products", javaType = List.class, column = "id", many = @Many(select = "tk.ddvudo.Mybatis.UseAnnotation.ProductMapper.getPorduct"))
+            @Result(property = "products", javaType = List.class, column = "id", many = @Many(select = "tk.ddvudo.Mybatis.UseAnnotation.ProductMapper.listPorductByCategory"))
     })
     List<Category> list();
 }

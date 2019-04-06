@@ -7,6 +7,6 @@ import java.util.List;
 
 
 public interface ProductMapper {
-    @Select("select * From Product where cid = #{cid}")
-    List<Product> listPorductByCategory(String cid);
+    @Select("select * From Product where cid = #{0}")
+    List<Product> listPorductByCategory(String id);
 }
