@@ -11,10 +11,10 @@ public interface CategoryMapper {
     int add(Category category);
 
     @Delete(" delete from Category where id= #{id} ")
-    void delete(int id);
+    void delete(String id);
 
     @Select("select * from Category where id= #{id} ")
-    Category get(int id);
+    Category get(String id);
 
     @Update("update Category set name=#{name} where id=#{id} ")
     int update(Category category);

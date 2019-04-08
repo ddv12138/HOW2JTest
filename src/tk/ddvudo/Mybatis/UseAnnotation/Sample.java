@@ -18,12 +18,17 @@ public class Sample {
         SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
         SqlSession session = sqlSessionFactory.openSession();
         CategoryMapper mapper = session.getMapper(CategoryMapper.class);
+//        ProductMapper productMapper = session.getMapper(ProductMapper.class);
+//        List<Product> products = productMapper.list();
+//        System.out.println(products);
+        OrderMapper om = session.getMapper(OrderMapper.class);
+        System.out.println(om.list());
 
 //        add(mapper);
 //        delete(mapper);
 //        get(mapper);
 //        update(mapper);
-        listAll(mapper);
+//        listAll(mapper);
 
         session.commit();
         session.close();
@@ -31,19 +36,19 @@ public class Sample {
     }
 
     private static void update(CategoryMapper mapper) {
-        Category c = mapper.get(8);
+        Category c = mapper.get("8");
         c.setName("修改了的Category名稱");
         mapper.update(c);
         listAll(mapper);
     }
 
     private static void get(CategoryMapper mapper) {
-        Category c = mapper.get(8);
+        Category c = mapper.get("8");
         System.out.println(c.getName());
     }
 
     private static void delete(CategoryMapper mapper) {
-        mapper.delete(2);
+        mapper.delete("2");
         listAll(mapper);
     }
 

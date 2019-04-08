@@ -27,5 +27,7 @@
         <mapper resource="tk/ddvudo/Mybatis/beanXmlConfig/OrderItem.xml"/>
         <mapper class="tk.ddvudo.Mybatis.UseAnnotation.CategoryMapper"/>
         <mapper class="tk.ddvudo.Mybatis.UseAnnotation.ProductMapper"/>
+        <mapper class="tk.ddvudo.Mybatis.UseAnnotation.OrderMapper"/>
+        <mapper class="tk.ddvudo.Mybatis.UseAnnotation.OrderItemMapper"/>
     </mappers>
 </configuration>
