@@ -1,9 +1,6 @@
 package tk.ddvudo.Mybatis.UseAnnotation;
 
-import org.apache.ibatis.annotations.One;
-import org.apache.ibatis.annotations.Result;
-import org.apache.ibatis.annotations.Results;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 import tk.ddvudo.Mybatis.JavaBeans.Category;
 import tk.ddvudo.Mybatis.JavaBeans.Product;
 
@@ -31,4 +28,7 @@ public interface ProductMapper {
             @Result(property = "category", javaType = Category.class, column = "cid", one = @One(select = "tk.ddvudo.Mybatis.UseAnnotation.CategoryMapper.get"))
     })
     List<Product> list();
+
+    @InsertProvider(type = ProductDynaSqlProvider.class, method = "add")
+    int Insert(Product p);
 }

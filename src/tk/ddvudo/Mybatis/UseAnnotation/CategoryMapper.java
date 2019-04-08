@@ -13,13 +13,13 @@ public interface CategoryMapper {
     @Delete(" delete from Category where id= #{id} ")
     void delete(String id);
 
-    @Select("select * from Category where id= #{id} ")
+    @SelectProvider(type = CategoryDynaSqlProvider.class, method = "getById")
     Category get(String id);
 
     @Update("update Category set name=#{name} where id=#{id} ")
     int update(Category category);
 
-    @Select(" select * from Category ")
+    @SelectProvider(type = CategoryDynaSqlProvider.class, method = "list")
     @Results({
             @Result(property = "id", column = "id"),
             @Result(property = "name", column = "name"),

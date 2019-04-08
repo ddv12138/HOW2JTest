@@ -8,6 +8,7 @@ public class Product {
 
     public void setCategory(Category category) {
         this.category = category;
+        this.cid = category.getId();
     }
 
     Category category;
@@ -32,10 +33,11 @@ public class Product {
         return sb.toString();
     }
 
-    public Product(String name, String cid, Float price) {
+    public Product(String name, Category category, Float price) {
         this.id = UUID.randomUUID().toString().replaceAll("-", "");
         this.name = name;
-        this.cid = cid;
+        this.cid = category.getId();
+        this.category = category;
         this.price = price;
     }
 

@@ -5,6 +5,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import tk.ddvudo.Mybatis.JavaBeans.Category;
+import tk.ddvudo.Mybatis.JavaBeans.Product;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -17,19 +18,12 @@ public class Sample {
         InputStream inputStream = Resources.getResourceAsStream(resource);
         SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
         SqlSession session = sqlSessionFactory.openSession();
-        CategoryMapper mapper = session.getMapper(CategoryMapper.class);
-//        ProductMapper productMapper = session.getMapper(ProductMapper.class);
-//        List<Product> products = productMapper.list();
-//        System.out.println(products);
-        OrderMapper om = session.getMapper(OrderMapper.class);
-        System.out.println(om.list());
-
-//        add(mapper);
-//        delete(mapper);
-//        get(mapper);
-//        update(mapper);
-//        listAll(mapper);
-
+        CategoryMapper cm = session.getMapper(CategoryMapper.class);
+        Category c = cm.get("1");
+        Product p = new Product("test", c, 12.65f);
+        System.out.println(p);
+        ProductMapper pm = session.getMapper(ProductMapper.class);
+        System.out.println(pm.Insert(p));
         session.commit();
         session.close();
 
