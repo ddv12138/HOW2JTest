@@ -12,12 +12,36 @@
     <environments default="development">
         <environment id="development">
             <transactionManager type="JDBC"/>
-            <dataSource type="POOLED">
-                <property name="driver" value="com.mysql.cj.jdbc.Driver"/>
-                <property name="url"
+            <!--            <dataSource type="POOLED">-->
+            <!--                <property name="driver" value="com.mysql.cj.jdbc.Driver"/>-->
+            <!--                <property name="url"-->
+            <!--                          value="jdbc:mysql://ddvudo.tk:3306/how2jdb?characterEncoding=UTF-8&amp;autoReconnect=true&amp;failOverReadOnly=false&amp;allowMultiQueries=true"/>-->
+            <!--                <property name="username" value="how2j"/>-->
+            <!--                <property name="password" value="liukang"/>-->
+            <!--            </dataSource>-->
+            <dataSource type="tk.ddvudo.Mybatis.UseC3P0.C3P0DatasourceFactory">
+                <property name="driverClass" value="com.mysql.cj.jdbc.Driver"/>
+                <property name="jdbcUrl"
                           value="jdbc:mysql://ddvudo.tk:3306/how2jdb?characterEncoding=UTF-8&amp;autoReconnect=true&amp;failOverReadOnly=false&amp;allowMultiQueries=true"/>
-                <property name="username" value="how2j"/>
+                <property name="user" value="how2j"/>
                 <property name="password" value="liukang"/>
+                <!-- 连接池初始化大小为3 -->
+                <property name="initialPoolSize" value="3"/>
+                <!-- 连接池最大为10 -->
+                <property name="maxPoolSize" value="10"/>
+                <!-- 连接池最小为3 -->
+                <property name="minPoolSize" value="3"/>
+                <!-- 连接池在无空闲连接可用时一次性最多创建的新数据库连接数  -->
+                <property name="acquireIncrement" value="5"/>
+                <!-- 连接的最大空闲时间，如果超过这个时间（秒），某个数据库连接还没有被使用，则会断开掉这个连接。如果为0，则永远不会断开连接,即回收此连接 -->
+                <property name="maxIdleTime" value="30"/>
+
+                <!-- 最大的Statement数量 -->
+                <property name="maxStatements" value="500"/>
+                <!-- 每个连接启动的最大Statement数量 -->
+                <property name="maxStatementsPerConnection" value="50"/>
+                <!-- 同时运行的线程数 -->
+                <property name="numHelperThreads" value="5"/>
             </dataSource>
         </environment>
     </environments>
