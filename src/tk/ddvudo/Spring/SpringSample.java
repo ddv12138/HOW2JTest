@@ -4,9 +4,9 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 public class SpringSample {
-    public static void main(String... args) {
+    public static void main(String... args) throws Exception {
         ApplicationContext context = new ClassPathXmlApplicationContext(new String[]{"applicationContext.xml"});
-        ProductService ps = (ProductService) context.getBean("ProductService");
-        ps.doSomeService();
+        MysqlDBQuery msbq = (MysqlDBQuery) context.getBean("MysqlDBQuery");
+        msbq.randomInsetData();
     }
 }
