@@ -4,7 +4,6 @@ import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
-import org.aspectj.lang.annotation.Around;
 import org.springframework.stereotype.Component;
 import tk.ddvudo.Mybatis.JavaBeans.Category;
 import tk.ddvudo.Mybatis.JavaBeans.Product;
