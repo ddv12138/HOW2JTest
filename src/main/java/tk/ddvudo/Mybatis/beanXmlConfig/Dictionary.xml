@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="java.tk.ddvudo.Mybatis">
+    <insert id="addDictionary" parameterType="Dictionary">
+        insert into dictionary (receive, response)
+        values (#{receive}, #{response})
+    </insert>
+
+    <delete id="deleteDictionary" parameterType="Dictionary">
+        delete
+        from dictionary
+        where id = #{id}
+    </delete>
+
+    <select id="getDictionary" parameterType="_int" resultType="Dictionary">
+        select *
+        from dictionary
+        where id = #{id}
+    </select>
+
+    <update id="updateDictionary" parameterType="Dictionary">
+        update dictionary
+        set receive=#{receive}
+        where id = #{id}
+    </update>
+    <select id="listDictionary" resultType="Dictionary">
+        select *
+        from dictionary
+    </select>
+    <select id="getDictionaryByReceive" parameterType="string" resultType="Dictionary">
+        select *
+        from dictionary
+        where receive like concat('%', #{0}, '%')
+    </select>
+    <select id="getDictionaryByReceiveWhenIdBigThan" parameterType="map" resultType="Dictionary">
+        select *
+        from dictionary
+        where id > #{id}
+          and receive like concat('%', #{receive}, '%')
+    </select>
+</mapper>

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="java.tk.ddvudo.Mybatis">
+    <insert id="addProduct" parameterType="Product">
+        insert into Product (id, name)
+        values (#{id}, #{name})
+    </insert>
+
+    <delete id="deleteProduct" parameterType="Product">
+        delete
+        from Product
+        where id = #{id}
+    </delete>
+
+    <select id="getProduct" parameterType="string" resultType="Product">
+        select c.*, p.*, c.id 'cid', p.id 'pid', c.name 'cname', p.name 'pname'
+        from Category c
+                 left join Product p on c.id = p.cid
+        where p.id = #{id}
+    </select>
+
+    <update id="updateProduct" parameterType="Product">
+        update Product
+        set name=#{name},
+            cid = #{category.id}
+        where id = #{id}
+    </update>
+    <resultMap type="main.java.tk.ddvudo.Mybatis.JavaBeans.Product" id="productBean">
+        <id column="p_id" property="id"/>
+        <result column="p_name" property="name"/>
+        <result column="p_price" property="price"/>
+        <association property="category" javaType="main.java.tk.ddvudo.Mybatis.JavaBeans.Category">
+            <id column="c_id" property="id"/>
+            <result column="c_name" property="name"/>
+        </association>
+    </resultMap>
+    <select id="listProduct" resultMap="productBean">
+        select p.id    as p_id,
+               p.name  as p_name,
+               p.price as p_price,
+               c.id    as c_id,
+               c.name  as c_name
+        from Category c,
+             Product p
+        where c.id = p.cid
+    </select>
+</mapper>
