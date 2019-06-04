@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="how2jdb@ddvudo.tk" uuid="9abbca38-f607-4f28-af79-8cbfe5d4e81f">
-      <driver-ref>mysql</driver-ref>
+    <data-source source="LOCAL" name="MySQL - how2jdb@ddvudo.top" uuid="9abbca38-f607-4f28-af79-8cbfe5d4e81f">
+      <driver-ref>mysql.8</driver-ref>
       <synchronize>true</synchronize>
-      <jdbc-driver>com.mysql.jdbc.Driver</jdbc-driver>
-      <jdbc-url>jdbc:mysql://ddvudo.tk:3306/how2jdb</jdbc-url>
+      <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
+      <jdbc-url>jdbc:mysql://ddvudo.top:3306/how2jdb</jdbc-url>
       <driver-properties>
         <property name="autoReconnect" value="true" />
         <property name="zeroDateTimeBehavior" value="convertToNull" />
