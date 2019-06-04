@@ -1,5 +1,6 @@
 package tk.ddvudo.Shiro;
 
+import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
@@ -11,20 +12,22 @@ import org.apache.shiro.subject.PrincipalCollection;
 import tk.ddvudo.Mybatis.JavaBeans.*;
 import tk.ddvudo.Mybatis.UseAnnotation.*;
 
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.toList;
 
 public class MyRealm extends AuthorizingRealm {
+
+    String resourcePath = "mybatis-config.xml";
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
         String username = (String) principalCollection.getPrimaryPrincipal();
         SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo();
         try {
-            SqlSessionFactory ssf = new SqlSessionFactoryBuilder().build(new FileInputStream("classpath:mybatis-config.xml"));
+            SqlSessionFactory ssf = new SqlSessionFactoryBuilder().build(Resources.getResourceAsStream(resourcePath));
             SqlSession session = ssf.openSession();
             UsertableDao mapper = session.getMapper(UsertableDao.class);
             UsertableExample example = new UsertableExample();
@@ -59,6 +62,8 @@ public class MyRealm extends AuthorizingRealm {
             authorizationInfo.addStringPermissions(ress.stream().map(Resourcetable -> Resourcetable.getId() + "").collect(Collectors.toList()));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
         return authorizationInfo;
     }
@@ -69,7 +74,7 @@ public class MyRealm extends AuthorizingRealm {
         UsernamePasswordToken token = (UsernamePasswordToken) authenticationToken;
         SimpleAuthenticationInfo authenticationInfo = new SimpleAuthenticationInfo();
         try {
-            SqlSessionFactory ssf = new SqlSessionFactoryBuilder().build(new FileInputStream("classpath:mybatis-config.xml"));
+            SqlSessionFactory ssf = new SqlSessionFactoryBuilder().build(Resources.getResourceAsStream(resourcePath));
             SqlSession session = ssf.openSession();
             String username = (String) token.getPrincipal();
             UsertableDao mapper = session.getMapper(UsertableDao.class);
@@ -81,7 +86,7 @@ public class MyRealm extends AuthorizingRealm {
             }
             Usertable user = users.get(0);
             authenticationInfo = new SimpleAuthenticationInfo(user.getName(), user.getPassword(), getName());
-        } catch (FileNotFoundException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
         return authenticationInfo;

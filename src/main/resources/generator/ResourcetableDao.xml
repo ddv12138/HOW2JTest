@@ -1,0 +1,297 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="tk.ddvudo.Mybatis.UseAnnotation.ResourcetableDao">
+    <resultMap id="BaseResultMap" type="tk.ddvudo.Mybatis.JavaBeans.Resourcetable">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="cnname" jdbcType="VARCHAR" property="cnname"/>
+        <result column="istop" jdbcType="INTEGER" property="istop"/>
+        <result column="leftvalue" jdbcType="INTEGER" property="leftvalue"/>
+        <result column="rightvalue" jdbcType="INTEGER" property="rightvalue"/>
+        <result column="level" jdbcType="INTEGER" property="level"/>
+        <result column="order" jdbcType="INTEGER" property="order"/>
+        <result column="urlpath" jdbcType="VARCHAR" property="urlpath"/>
+        <result column="haschild" jdbcType="BIT" property="haschild"/>
+    </resultMap>
+    <sql id="Example_Where_Clause">
+        <where>
+            <foreach collection="oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" prefixOverrides="and" suffix=")">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach close=")" collection="criterion.value" item="listItem" open="("
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Update_By_Example_Where_Clause">
+        <where>
+            <foreach collection="example.oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" prefixOverrides="and" suffix=")">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach close=")" collection="criterion.value" item="listItem" open="("
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Base_Column_List">
+        id, `name`, cnname, istop, leftvalue, rightvalue, `level`, `order`, urlpath, haschild
+    </sql>
+    <select id="selectByExample" parameterType="tk.ddvudo.Mybatis.JavaBeans.ResourcetableExample"
+            resultMap="BaseResultMap">
+        select
+        <if test="distinct">
+            distinct
+        </if>
+        <include refid="Base_Column_List"/>
+        from Resourcetable
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+        <if test="orderByClause != null">
+            order by ${orderByClause}
+        </if>
+        <if test="limit != null">
+            <if test="offset != null">
+                limit ${offset}, ${limit}
+            </if>
+            <if test="offset == null">
+                limit ${limit}
+            </if>
+        </if>
+    </select>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from Resourcetable
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        delete
+        from Resourcetable
+        where id = #{id,jdbcType=INTEGER}
+    </delete>
+    <delete id="deleteByExample" parameterType="tk.ddvudo.Mybatis.JavaBeans.ResourcetableExample">
+        delete from Resourcetable
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </delete>
+    <insert id="insert" keyColumn="id" keyProperty="id" parameterType="tk.ddvudo.Mybatis.JavaBeans.Resourcetable"
+            useGeneratedKeys="true">
+        insert into Resourcetable (`name`, cnname, istop,
+                                   leftvalue, rightvalue, `level`,
+                                   `order`, urlpath, haschild)
+        values (#{name,jdbcType=VARCHAR}, #{cnname,jdbcType=VARCHAR}, #{istop,jdbcType=INTEGER},
+                #{leftvalue,jdbcType=INTEGER}, #{rightvalue,jdbcType=INTEGER}, #{level,jdbcType=INTEGER},
+                #{order,jdbcType=INTEGER}, #{urlpath,jdbcType=VARCHAR}, #{haschild,jdbcType=BIT})
+    </insert>
+    <insert id="insertSelective" keyColumn="id" keyProperty="id"
+            parameterType="tk.ddvudo.Mybatis.JavaBeans.Resourcetable" useGeneratedKeys="true">
+        insert into Resourcetable
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="name != null">
+                `name`,
+            </if>
+            <if test="cnname != null">
+                cnname,
+            </if>
+            <if test="istop != null">
+                istop,
+            </if>
+            <if test="leftvalue != null">
+                leftvalue,
+            </if>
+            <if test="rightvalue != null">
+                rightvalue,
+            </if>
+            <if test="level != null">
+                `level`,
+            </if>
+            <if test="order != null">
+                `order`,
+            </if>
+            <if test="urlpath != null">
+                urlpath,
+            </if>
+            <if test="haschild != null">
+                haschild,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="cnname != null">
+                #{cnname,jdbcType=VARCHAR},
+            </if>
+            <if test="istop != null">
+                #{istop,jdbcType=INTEGER},
+            </if>
+            <if test="leftvalue != null">
+                #{leftvalue,jdbcType=INTEGER},
+            </if>
+            <if test="rightvalue != null">
+                #{rightvalue,jdbcType=INTEGER},
+            </if>
+            <if test="level != null">
+                #{level,jdbcType=INTEGER},
+            </if>
+            <if test="order != null">
+                #{order,jdbcType=INTEGER},
+            </if>
+            <if test="urlpath != null">
+                #{urlpath,jdbcType=VARCHAR},
+            </if>
+            <if test="haschild != null">
+                #{haschild,jdbcType=BIT},
+            </if>
+        </trim>
+    </insert>
+    <select id="countByExample" parameterType="tk.ddvudo.Mybatis.JavaBeans.ResourcetableExample"
+            resultType="java.lang.Long">
+        select count(*) from Resourcetable
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </select>
+    <update id="updateByExampleSelective" parameterType="map">
+        update Resourcetable
+        <set>
+            <if test="record.id != null">
+                id = #{record.id,jdbcType=INTEGER},
+            </if>
+            <if test="record.name != null">
+                `name` = #{record.name,jdbcType=VARCHAR},
+            </if>
+            <if test="record.cnname != null">
+                cnname = #{record.cnname,jdbcType=VARCHAR},
+            </if>
+            <if test="record.istop != null">
+                istop = #{record.istop,jdbcType=INTEGER},
+            </if>
+            <if test="record.leftvalue != null">
+                leftvalue = #{record.leftvalue,jdbcType=INTEGER},
+            </if>
+            <if test="record.rightvalue != null">
+                rightvalue = #{record.rightvalue,jdbcType=INTEGER},
+            </if>
+            <if test="record.level != null">
+                `level` = #{record.level,jdbcType=INTEGER},
+            </if>
+            <if test="record.order != null">
+                `order` = #{record.order,jdbcType=INTEGER},
+            </if>
+            <if test="record.urlpath != null">
+                urlpath = #{record.urlpath,jdbcType=VARCHAR},
+            </if>
+            <if test="record.haschild != null">
+                haschild = #{record.haschild,jdbcType=BIT},
+            </if>
+        </set>
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByExample" parameterType="map">
+        update Resourcetable
+        set id = #{record.id,jdbcType=INTEGER},
+        `name` = #{record.name,jdbcType=VARCHAR},
+        cnname = #{record.cnname,jdbcType=VARCHAR},
+        istop = #{record.istop,jdbcType=INTEGER},
+        leftvalue = #{record.leftvalue,jdbcType=INTEGER},
+        rightvalue = #{record.rightvalue,jdbcType=INTEGER},
+        `level` = #{record.level,jdbcType=INTEGER},
+        `order` = #{record.order,jdbcType=INTEGER},
+        urlpath = #{record.urlpath,jdbcType=VARCHAR},
+        haschild = #{record.haschild,jdbcType=BIT}
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByPrimaryKeySelective" parameterType="tk.ddvudo.Mybatis.JavaBeans.Resourcetable">
+        update Resourcetable
+        <set>
+            <if test="name != null">
+                `name` = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="cnname != null">
+                cnname = #{cnname,jdbcType=VARCHAR},
+            </if>
+            <if test="istop != null">
+                istop = #{istop,jdbcType=INTEGER},
+            </if>
+            <if test="leftvalue != null">
+                leftvalue = #{leftvalue,jdbcType=INTEGER},
+            </if>
+            <if test="rightvalue != null">
+                rightvalue = #{rightvalue,jdbcType=INTEGER},
+            </if>
+            <if test="level != null">
+                `level` = #{level,jdbcType=INTEGER},
+            </if>
+            <if test="order != null">
+                `order` = #{order,jdbcType=INTEGER},
+            </if>
+            <if test="urlpath != null">
+                urlpath = #{urlpath,jdbcType=VARCHAR},
+            </if>
+            <if test="haschild != null">
+                haschild = #{haschild,jdbcType=BIT},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="tk.ddvudo.Mybatis.JavaBeans.Resourcetable">
+        update Resourcetable
+        set `name`     = #{name,jdbcType=VARCHAR},
+            cnname     = #{cnname,jdbcType=VARCHAR},
+            istop      = #{istop,jdbcType=INTEGER},
+            leftvalue  = #{leftvalue,jdbcType=INTEGER},
+            rightvalue = #{rightvalue,jdbcType=INTEGER},
+            `level`    = #{level,jdbcType=INTEGER},
+            `order`    = #{order,jdbcType=INTEGER},
+            urlpath    = #{urlpath,jdbcType=VARCHAR},
+            haschild   = #{haschild,jdbcType=BIT}
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+</mapper>
