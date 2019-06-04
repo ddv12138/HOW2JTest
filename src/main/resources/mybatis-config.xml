@@ -15,7 +15,7 @@
             <dataSource type="POOLED">
                 <property name="driver" value="com.mysql.cj.jdbc.Driver"/>
                 <property name="url"
-                          value="jdbc:mysql://tk.ddvudo.java.tk:3306/how2jdb?characterEncoding=UTF-8&amp;autoReconnect=true&amp;failOverReadOnly=false&amp;allowMultiQueries=true"/>
+                          value="jdbc:mysql://ddvudo.top:3306/how2jdb?characterEncoding=UTF-8&amp;autoReconnect=true&amp;failOverReadOnly=false&amp;allowMultiQueries=true"/>
                 <property name="username" value="how2j"/>
                 <property name="password" value="liukang"/>
             </dataSource>
@@ -46,15 +46,17 @@
         </environment>
     </environments>
     <mappers>
-        <mapper resource="java.tk/ddvudo/Mybatis/beanXmlConfig/MyTable.xml"/>
-        <mapper resource="java.tk/ddvudo/Mybatis/beanXmlConfig/Dictionary.xml"/>
-        <mapper resource="java.tk/ddvudo/Mybatis/beanXmlConfig/Category.xml"/>
-        <mapper resource="java.tk/ddvudo/Mybatis/beanXmlConfig/Product.xml"/>
-        <mapper resource="java.tk/ddvudo/Mybatis/beanXmlConfig/Order.xml"/>
-        <mapper resource="java.tk/ddvudo/Mybatis/beanXmlConfig/OrderItem.xml"/>
-        <mapper class="main.java.tk.ddvudo.Mybatis.UseAnnotation.CategoryMapper"/>
-        <mapper class="main.java.tk.ddvudo.Mybatis.UseAnnotation.ProductMapper"/>
-        <mapper class="main.java.tk.ddvudo.Mybatis.UseAnnotation.OrderMapper"/>
-        <mapper class="main.java.tk.ddvudo.Mybatis.UseAnnotation.OrderItemMapper"/>
+        <!--        <mapper resource="tk/ddvudo/Mybatis/beanXmlConfig/MyTable.xml"/>-->
+        <!--        <mapper resource="tk/ddvudo/Mybatis/beanXmlConfig/Category.xml"/>-->
+        <!--        <mapper resource="tk/ddvudo/Mybatis/beanXmlConfig/Dictionary.xml"/>-->
+        <!--        <mapper resource="tk/ddvudo/Mybatis/beanXmlConfig/Order.xml"/>-->
+        <!--        <mapper resource="tk/ddvudo/Mybatis/beanXmlConfig/OrderItem.xml"/>-->
+        <!--        <mapper resource="tk/ddvudo/Mybatis/beanXmlConfig/Product.xml"/>-->
+
+        <mapper resource="generator/ResourcetableDao.xml"/>
+        <mapper resource="generator/RoleResMapDao.xml"/>
+        <mapper resource="generator/RoletableDao.xml"/>
+        <mapper resource="generator/UserRoleMapDao.xml"/>
+        <mapper resource="generator/UsertableDao.xml"/>
     </mappers>
 </configuration>

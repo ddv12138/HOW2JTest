@@ -15,6 +15,7 @@ import tk.ddvudo.Mybatis.UseAnnotation.*;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.toList;
@@ -33,10 +34,7 @@ public class MyRealm extends AuthorizingRealm {
             UsertableExample example = new UsertableExample();
             example.createCriteria().andNameEqualTo(username);
             List<Usertable> users = mapper.selectByExample(example);
-            if (null == users || users.size() == 0) {
-                throw new UnknownAccountException();
-            }
-            Usertable user = users.get(0);
+            Usertable user = Optional.ofNullable(users).get().get(0);
             UserRoleMapDao userRoleMapper = session.getMapper(UserRoleMapDao.class);
             UserRoleMapExample userRoleExample = new UserRoleMapExample();
             userRoleExample.createCriteria().andUseridEqualTo(user.getId());
@@ -45,18 +43,20 @@ public class MyRealm extends AuthorizingRealm {
 
             RoletableDao roleMapper = session.getMapper(RoletableDao.class);
             RoletableExample roleExample = new RoletableExample();
-            roleExample.createCriteria().andIdIn(userrolemaps.stream().map(UserRoleMap::getRoleid).collect(Collectors.toList()));
+            roleExample.createCriteria().andIdIn(Optional.ofNullable(userrolemaps).get().stream().map(UserRoleMap::getRoleid).collect(Collectors.toList()));
             List<Roletable> roles = roleMapper.selectByExample(roleExample);
             authorizationInfo.addRoles(roles.stream().map(Roletable::getName).collect(toList()));
 
             RoleResMapDao roleResMapDao = session.getMapper(RoleResMapDao.class);
             RoleResMapExample roleResMapExample = new RoleResMapExample();
-            roleResMapExample.createCriteria().andRoleidIn(roles.stream().map(Roletable::getId).collect(Collectors.toList()));
+            roleResMapExample.createCriteria().andRoleidIn(Optional.ofNullable(roles).get().stream().map(Roletable::getId).collect(Collectors.toList()));
             List<RoleResMap> roleResMaps = roleResMapDao.selectByExample(roleResMapExample);
 
             ResourcetableDao resourcetableDao = session.getMapper(ResourcetableDao.class);
             ResourcetableExample resourcetableExample = new ResourcetableExample();
-            resourcetableExample.createCriteria().andIdIn(roleResMaps.stream().map(RoleResMap::getResid).collect(Collectors.toList()));
+            resourcetableExample.createCriteria().andIdIn(Optional.ofNullable(roleResMaps).filter(m -> {
+                return m.size() > 0;
+            }).get().stream().map(RoleResMap::getResid).collect(Collectors.toList()));
             List<Resourcetable> ress = resourcetableDao.selectByExample(resourcetableExample);
 
             authorizationInfo.addStringPermissions(ress.stream().map(Resourcetable -> Resourcetable.getId() + "").collect(Collectors.toList()));

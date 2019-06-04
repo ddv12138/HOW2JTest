@@ -13,8 +13,13 @@ public class ShiroSample {
         SecurityManager securityManager = factory.getInstance();
         SecurityUtils.setSecurityManager(securityManager);
         Subject currentUser = SecurityUtils.getSubject();
-        UsernamePasswordToken token = new UsernamePasswordToken("123", "123");
+        UsernamePasswordToken token = new UsernamePasswordToken("admin", "admin");
+        System.out.println(currentUser.isAuthenticated());
         currentUser.login(token);
-        System.out.println(currentUser.getPrincipal());
+        System.out.println(currentUser.isAuthenticated());
+        System.out.println(currentUser.hasRole("Captains"));
+        System.out.println(currentUser.isPermitted("2"));
+        currentUser.logout();
+        System.out.println(currentUser.isAuthenticated());
     }
 }
