@@ -3,14 +3,16 @@ package tk.ddvudo.Shiro;
 
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
-import org.apache.shiro.config.IniSecurityManagerFactory;
-import org.apache.shiro.mgt.SecurityManager;
+import org.apache.shiro.mgt.DefaultSecurityManager;
+import org.apache.shiro.realm.Realm;
 import org.apache.shiro.subject.Subject;
+
+import java.util.Arrays;
 
 public class ShiroSample {
     public static void main(String... args) {
-        IniSecurityManagerFactory factory = new IniSecurityManagerFactory("classpath:shiro.ini");
-        SecurityManager securityManager = factory.getInstance();
+        DefaultSecurityManager securityManager = new DefaultSecurityManager();
+        securityManager.setRealms(Arrays.asList((Realm) new MyRealm()));
         SecurityUtils.setSecurityManager(securityManager);
         Subject currentUser = SecurityUtils.getSubject();
         UsernamePasswordToken token = new UsernamePasswordToken("admin", "admin");
