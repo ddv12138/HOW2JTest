@@ -12,7 +12,6 @@ import org.apache.shiro.subject.PrincipalCollection;
 import tk.ddvudo.Mybatis.JavaBeans.*;
 import tk.ddvudo.Mybatis.UseAnnotation.*;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
@@ -22,13 +21,22 @@ import static java.util.stream.Collectors.toList;
 
 public class MyRealm extends AuthorizingRealm {
 
-    String resourcePath = "mybatis-config.xml";
+    private String resourcePath = "mybatis-config.xml";
+    private SqlSessionFactory ssf;
+
+    {
+        try {
+            ssf = new SqlSessionFactoryBuilder().build(Resources.getResourceAsStream(resourcePath));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
         String username = (String) principalCollection.getPrimaryPrincipal();
         SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo();
         try {
-            SqlSessionFactory ssf = new SqlSessionFactoryBuilder().build(Resources.getResourceAsStream(resourcePath));
             SqlSession session = ssf.openSession();
             UsertableDao mapper = session.getMapper(UsertableDao.class);
             UsertableExample example = new UsertableExample();
@@ -54,15 +62,11 @@ public class MyRealm extends AuthorizingRealm {
 
             ResourcetableDao resourcetableDao = session.getMapper(ResourcetableDao.class);
             ResourcetableExample resourcetableExample = new ResourcetableExample();
-            resourcetableExample.createCriteria().andIdIn(Optional.ofNullable(roleResMaps).filter(m -> {
-                return m.size() > 0;
-            }).get().stream().map(RoleResMap::getResid).collect(Collectors.toList()));
+            resourcetableExample.createCriteria().andIdIn(Optional.ofNullable(roleResMaps).filter(m -> m.size() > 0).get().stream().map(RoleResMap::getResid).collect(Collectors.toList()));
             List<Resourcetable> ress = resourcetableDao.selectByExample(resourcetableExample);
 
             authorizationInfo.addStringPermissions(ress.stream().map(Resourcetable -> Resourcetable.getId() + "").collect(Collectors.toList()));
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return authorizationInfo;
