@@ -40,16 +40,15 @@ public class OrderItem {
 
     @Override
     public String toString() {
-        final StringBuilder sb = new StringBuilder("{");
-        sb.append("\"id\":")
-                .append(id);
-        sb.append(",\"number\":")
-                .append(number);
-        sb.append(",\"order\":")
-                .append(order);
-        sb.append(",\"product\":")
-                .append(product);
-        sb.append('}');
-        return sb.toString();
+        String sb = "{" + "\"id\":" +
+                id +
+                ",\"number\":" +
+                number +
+                ",\"order\":" +
+                order +
+                ",\"product\":" +
+                product +
+                '}';
+        return sb;
     }
 }

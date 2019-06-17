@@ -8,29 +8,23 @@ public class NumClass {
     public static void main(String... args) {
         NumClass nc = new NumClass();
         for (int i = 0; i < 5; i++) {
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    while (true) {
-                        if (nc.getHP() < 1000) {
-                            nc.modifyHP(1);
-                            System.out.println(Thread.currentThread().getName() + "--add-->" + nc.getHP());
-                        } else {
-                            System.out.println(Thread.currentThread().getName() + "--add------>" + nc.getHP());
-                        }
+            new Thread(() -> {
+                while (true) {
+                    if (nc.getHP() < 1000) {
+                        nc.modifyHP(1);
+                        System.out.println(Thread.currentThread().getName() + "--add-->" + nc.getHP());
+                    } else {
+                        System.out.println(Thread.currentThread().getName() + "--add------>" + nc.getHP());
                     }
                 }
             }).start();
         }
         for (int i = 0; i < 5; i++) {
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    while (true) {
-                        if (nc.getHP() > 0) {
-                            nc.modifyHP(-1);
-                            System.out.println(Thread.currentThread().getName() + "--minus-->" + nc.getHP());
-                        }
+            new Thread(() -> {
+                while (true) {
+                    if (nc.getHP() > 0) {
+                        nc.modifyHP(-1);
+                        System.out.println(Thread.currentThread().getName() + "--minus-->" + nc.getHP());
                     }
                 }
             }).start();

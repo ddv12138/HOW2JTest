@@ -20,7 +20,7 @@ public class IPScanner {
                 String tmp = "";
                 while (null != (tmp = br.readLine())) {
                     System.out.println(tmp);
-                    if (tmp.indexOf("TTL") > -1 && !tmp.contains(tmpaddr)) {
+                    if (tmp.contains("TTL") && !tmp.contains(tmpaddr)) {
                         res.add(tmpaddr);
                     }
                 }

@@ -8,19 +8,16 @@ public class LambdaTest {
     @SuppressWarnings("unused")
     public static void main(String[] args) {
         Random r = new Random();
-        List<TestClass> heros = new ArrayList<TestClass>();
+        List<TestClass> heros = new ArrayList<>();
 
         for (int i = 1; i <= 10; i++) {
             heros.add(new TestClass("Test " + i, i, i));
         }
-        Comparator<TestClass> c0 = new Comparator<TestClass>() {
-            @Override
-            public int compare(TestClass h1, TestClass h2) {
-                if (h1.getAge() >= h2.getAge())
-                    return 1;
-                else
-                    return -1;
-            }
+        Comparator<TestClass> c0 = (h1, h2) -> {
+            if (h1.getAge() >= h2.getAge())
+                return 1;
+            else
+                return -1;
         };
         Comparator<TestClass> c1 = (TestClass h1, TestClass h2) -> {
             if (h1.getAge() >= h2.getAge())
@@ -31,7 +28,7 @@ public class LambdaTest {
         Comparator<TestClass> c2 = (h1, h2) -> (h1.getAge() - h2.getAge()) > 0 ? 1 : -1;
 
         //由匿名类写法演化
-        Collections.sort(heros, (h1, h2) -> h1.getAge() - h2.getAge());
+        heros.sort(Comparator.comparingInt(TestClass::getAge));
         //调用静态方法
 //		Collections.sort(heros, (h1, h2) ->LambdaTest.comparator(h1,h2));
 //		Collections.sort(heros, LambdaTest::comparator);

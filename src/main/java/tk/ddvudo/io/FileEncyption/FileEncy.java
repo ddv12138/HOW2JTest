@@ -44,8 +44,6 @@ public class FileEncy {
                 charbufferEncyption[i] = encyc;
             }
             fw.write(charbufferEncyption);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }

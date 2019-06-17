@@ -19,8 +19,8 @@ public class MailTest {
         email.setDebug(true);
         email.setHostName("SMTP.qq.com");//设置发送电子邮件使用的服务器主机名
         email.setSmtpPort(587);//设置发送电子邮件使用的邮件服务器的TCP端口地址
-        Optional<String> username = null;
-        Optional<String> authcode = null;
+        Optional<String> username = Optional.empty();
+        Optional<String> authcode = Optional.empty();
         try (BufferedReader br = new BufferedReader(new InputStreamReader(System.in))) {
             System.out.println("输入用户名");
             username = Optional.of(br.readLine());

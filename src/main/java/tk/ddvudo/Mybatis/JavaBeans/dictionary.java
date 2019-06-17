@@ -12,15 +12,14 @@ public class dictionary {
 
     @Override
     public String toString() {
-        final StringBuilder sb = new StringBuilder("{");
-        sb.append("\"id\":")
-                .append(id);
-        sb.append(",\"receive\":\"")
-                .append(receive).append('\"');
-        sb.append(",\"response\":\"")
-                .append(response).append('\"');
-        sb.append('}');
-        return sb.toString();
+        String sb = "{" + "\"id\":" +
+                id +
+                ",\"receive\":\"" +
+                receive + '\"' +
+                ",\"response\":\"" +
+                response + '\"' +
+                '}';
+        return sb;
     }
 
     public dictionary() {

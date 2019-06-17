@@ -42,7 +42,7 @@ public class Answer {
             try (FileReader fr = new FileReader(file); BufferedReader br = new BufferedReader(fr)) {
                 String tmp = "";
                 while (null != (tmp = br.readLine())) {
-                    if (tmp.toLowerCase().indexOf(keyword.toLowerCase()) > -1) {
+                    if (tmp.toLowerCase().contains(keyword.toLowerCase())) {
                         return true;
                     }
                 }

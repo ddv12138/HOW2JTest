@@ -18,19 +18,18 @@ public class Product {
 
     @Override
     public String toString() {
-        final StringBuilder sb = new StringBuilder("{");
-        sb.append("\"id\":\"")
-                .append(id).append('\"');
-        sb.append(",\"name\":\"")
-                .append(name).append('\"');
-        sb.append(",\"cid\":\"")
-                .append(cid).append('\"');
-        sb.append(",\"price\":")
-                .append(price);
-        sb.append(",\"category\":")
-                .append(category);
-        sb.append('}');
-        return sb.toString();
+        String sb = "{" + "\"id\":\"" +
+                id + '\"' +
+                ",\"name\":\"" +
+                name + '\"' +
+                ",\"cid\":\"" +
+                cid + '\"' +
+                ",\"price\":" +
+                price +
+                ",\"category\":" +
+                category +
+                '}';
+        return sb;
     }
 
     public Product(String name, Category category, Float price) {

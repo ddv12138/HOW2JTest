@@ -20,7 +20,7 @@ public class ThreadClass extends Thread {
         try (FileReader fr = new FileReader(f); BufferedReader br = new BufferedReader(fr)) {
             String tmp;
             while (null != (tmp = br.readLine())) {
-                if (tmp.indexOf(keyword) > -1) {
+                if (tmp.contains(keyword)) {
                     System.out.println(f.getName() + "[" + this.toString() + "]" + "--->" + tmp);
                 }
             }

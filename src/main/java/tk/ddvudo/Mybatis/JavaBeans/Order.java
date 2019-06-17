@@ -34,14 +34,13 @@ public class Order {
 
     @Override
     public String toString() {
-        final StringBuilder sb = new StringBuilder("{");
-        sb.append("\"id\":")
-                .append(id);
-        sb.append(",\"code\":\"")
-                .append(code).append('\"');
-        sb.append(",\"orderItems\":")
-                .append(orderItems);
-        sb.append('}');
-        return sb.toString();
+        String sb = "{" + "\"id\":" +
+                id +
+                ",\"code\":\"" +
+                code + '\"' +
+                ",\"orderItems\":" +
+                orderItems +
+                '}';
+        return sb;
     }
 }

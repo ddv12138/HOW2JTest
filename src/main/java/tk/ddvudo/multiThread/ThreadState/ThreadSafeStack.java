@@ -5,7 +5,7 @@ import java.util.Random;
 
 public class ThreadSafeStack {
 
-    LinkedList<String> heros = new LinkedList<String>();
+    LinkedList<String> heros = new LinkedList<>();
 
     public static void main(String[] args) {
 

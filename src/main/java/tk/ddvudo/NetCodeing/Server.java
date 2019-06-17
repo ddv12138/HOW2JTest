@@ -15,34 +15,30 @@ public class Server {
         try {
             ServerSocket server = new ServerSocket(1234);
             Socket s = server.accept();
-            Thread seerverThread = new Thread(new Runnable() {
-                public void run() {
-                    try {
-                        DataInputStream dis = new DataInputStream(s.getInputStream());
-                        while (true) {
-                            String msg = dis.readUTF();
-                            System.out.println(msg);
-                        }
-                    } catch (Exception e) {
-                        e.printStackTrace();
+            Thread seerverThread = new Thread(() -> {
+                try {
+                    DataInputStream dis = new DataInputStream(s.getInputStream());
+                    while (true) {
+                        String msg = dis.readUTF();
+                        System.out.println(msg);
                     }
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
             });
-            Thread clientThread = new Thread(new Runnable() {
-                public void run() {
-                    Scanner sc = new Scanner(System.in);
-                    try {
-                        DataOutputStream dos = new DataOutputStream(s.getOutputStream());
+            Thread clientThread = new Thread(() -> {
+                Scanner sc = new Scanner(System.in);
+                try {
+                    DataOutputStream dos = new DataOutputStream(s.getOutputStream());
 
-                        while (true) {
-                            String str = sc.next();
-                            dos.writeUTF(str);
-                        }
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    } finally {
-                        sc.close();
+                    while (true) {
+                        String str = sc.next();
+                        dos.writeUTF(str);
                     }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                } finally {
+                    sc.close();
                 }
             });
             ThreadPoolExecutor tpe = new ThreadPoolExecutor(2, 2, 1, TimeUnit.SECONDS, new LinkedBlockingQueue<>());

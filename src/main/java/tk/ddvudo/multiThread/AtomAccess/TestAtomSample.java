@@ -16,20 +16,18 @@ public class TestAtomSample {
         int number = 100000;
         Thread[] ts1 = new Thread[number];
         for (int i = 0; i < number; i++) {
-            Thread t = new Thread() {
-                public void run() {
-                    try {
-                        if (lock.tryLock(1, TimeUnit.SECONDS)) {
-                            value++;
-                        }
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    } finally {
-                        condition.signalAll();
-                        lock.unlock();
+            Thread t = new Thread(() -> {
+                try {
+                    if (lock.tryLock(1, TimeUnit.SECONDS)) {
+                        value++;
                     }
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                } finally {
+                    condition.signalAll();
+                    lock.unlock();
                 }
-            };
+            });
             t.start();
             ts1[i] = t;
         }
@@ -46,11 +44,7 @@ public class TestAtomSample {
         System.out.printf("%d个线程进行value++后，value的值变成:%d%n", number, value);
         Thread[] ts2 = new Thread[number];
         for (int i = 0; i < number; i++) {
-            Thread t = new Thread() {
-                public void run() {
-                    atomicValue.incrementAndGet();
-                }
-            };
+            Thread t = new Thread(() -> atomicValue.incrementAndGet());
             t.start();
             ts2[i] = t;
         }

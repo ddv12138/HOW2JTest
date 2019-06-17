@@ -7,7 +7,7 @@ public class ObjectStream {
 
     public static void main(String[] args) throws IOException, ClassNotFoundException {
         File f = new File("./src/java.tk/tk.ddvudo/ObjectStream/TestFile");
-        ArrayList<TestObject> toarr = new ArrayList<TestObject>();
+        ArrayList<TestObject> toarr = new ArrayList<>();
         for (int i = 0; i < 20; i++) {
             TestObject to = new TestObject(i + "", 18, 0);
             toarr.add(to);

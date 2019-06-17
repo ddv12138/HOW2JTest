@@ -153,22 +153,21 @@ public class Resourcetable implements Serializable {
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append(getClass().getSimpleName());
-        sb.append(" [");
-        sb.append("Hash = ").append(hashCode());
-        sb.append(", id=").append(id);
-        sb.append(", name=").append(name);
-        sb.append(", cnname=").append(cnname);
-        sb.append(", istop=").append(istop);
-        sb.append(", leftvalue=").append(leftvalue);
-        sb.append(", rightvalue=").append(rightvalue);
-        sb.append(", level=").append(level);
-        sb.append(", order=").append(order);
-        sb.append(", urlpath=").append(urlpath);
-        sb.append(", haschild=").append(haschild);
-        sb.append(", serialVersionUID=").append(serialVersionUID);
-        sb.append("]");
-        return sb.toString();
+        String sb = getClass().getSimpleName() +
+                " [" +
+                "Hash = " + hashCode() +
+                ", id=" + id +
+                ", name=" + name +
+                ", cnname=" + cnname +
+                ", istop=" + istop +
+                ", leftvalue=" + leftvalue +
+                ", rightvalue=" + rightvalue +
+                ", level=" + level +
+                ", order=" + order +
+                ", urlpath=" + urlpath +
+                ", haschild=" + haschild +
+                ", serialVersionUID=" + serialVersionUID +
+                "]";
+        return sb;
     }
 }

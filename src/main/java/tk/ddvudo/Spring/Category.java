@@ -37,14 +37,13 @@ public class Category {
 
     @Override
     public String toString() {
-        final StringBuilder sb = new StringBuilder("{");
-        sb.append("\"id\":\"")
-                .append(id).append('\"');
-        sb.append(",\"name\":\"")
-                .append(name).append('\"');
-        sb.append(",\"products\":")
-                .append(products);
-        sb.append('}');
-        return sb.toString();
+        String sb = "{" + "\"id\":\"" +
+                id + '\"' +
+                ",\"name\":\"" +
+                name + '\"' +
+                ",\"products\":" +
+                products +
+                '}';
+        return sb;
     }
 }

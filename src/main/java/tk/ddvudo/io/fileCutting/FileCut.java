@@ -36,11 +36,11 @@ public class FileCut {
                 }
             }
             ArrayList<byte[]> filebuffer = new ArrayList<>();
-            for (int i = 0; i < fileList.size(); i++) {
+            for (File file : fileList) {
                 FileInputStream tmpif = null;
                 try {
-                    tmpif = new FileInputStream(fileList.get(i));
-                    byte[] tmpbuffer = new byte[(int) fileList.get(i).length()];
+                    tmpif = new FileInputStream(file);
+                    byte[] tmpbuffer = new byte[(int) file.length()];
                     tmpif.read(tmpbuffer);
                     filebuffer.add(tmpbuffer);
                 } finally {
@@ -64,8 +64,6 @@ public class FileCut {
             } finally {
                 allInOneFo.close();
             }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
