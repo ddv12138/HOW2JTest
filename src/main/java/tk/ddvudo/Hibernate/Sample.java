@@ -9,8 +9,8 @@ public class Sample {
         SessionFactory sf = new Configuration().configure().buildSessionFactory();
         Session session = sf.openSession();
         session.beginTransaction();
-        session.createQuery("select p from Category p where p.name like :name")
-                .setParameter("name", "20190619%").list();
+        session.createQuery("from Category  where name = :name")
+                .setParameter("name", "20190619").list();
         session.getTransaction().commit();
         session.close();
         sf.close();
