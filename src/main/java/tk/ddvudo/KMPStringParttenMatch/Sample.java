@@ -17,9 +17,9 @@ public class Sample {
             if (j == 0 || p.charAt(i) == p.charAt(j)) {
                 i++;
                 j++;
-                next[i - 1] = j;
+                next[i] = j;
             } else {
-                j = next[j - 1];
+                j = next[j];
             }
         }
         return next;
