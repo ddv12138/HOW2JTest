@@ -3,6 +3,7 @@ package tk.ddvudo.KMPStringParttenMatch;
 public class Sample {
     public static void main(String... args) {
         String p = "ababaaaba";
+        p.indexOf("baaa");
         int[] next = get_next(p);
         for (int i : next) {
             System.out.print(i + " , ");
