@@ -28,16 +28,23 @@ public class KMPSample {
     }
 
     private static int[] get_next(String p) {
-        int[] next = new int[p.length() + 10];
-        int i = 1, j = 0;
-        while (i < p.length()) {
-            if (j == 0 || p.charAt(i) == p.charAt(j)) {
-                ++i;
-                ++j;
-                next[i - 1] = j;
-            } else {
-                j = next[j - 1];
-            }
+        int[] next = new int[p.length()];
+//        int i = 1, j = 0;
+//        while (i < p.length()) {
+//            if (j == 0 || p.charAt(i) == p.charAt(j)) {
+//                ++i;
+//                ++j;
+//                next[i - 1] = j;
+//            } else {
+//                j = next[j - 1];
+//            }
+//        }
+        for (int i = 1, k = 0; i < p.length(); i++) {
+            while (k > 0 && p.charAt(k) != p.charAt(i))
+                k = next[k - 1];
+            if (p.charAt(k) == p.charAt(i))
+                k++;
+            next[i] = k;
         }
         return next;
     }
