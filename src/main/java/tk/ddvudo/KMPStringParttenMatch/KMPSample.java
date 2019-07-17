@@ -11,7 +11,7 @@ public class KMPSample {
         }
     }
 
-    public static int violentMatch(String p, String t) {
+    private static int violentMatch(String p, String t) {
         for (int i = 0, j = 0; i < p.length() && j < t.length(); ) {
             if (p.charAt(i) != t.charAt(j)) {
                 i = i - j + 1;
@@ -27,6 +27,7 @@ public class KMPSample {
         return -1;
     }
 
+    //@TODO: 2019-7-17 写不出来了，先放着
     private static int[] get_next(String p) {
         int[] next = new int[p.length()];
         int i = 1, j = 0;
