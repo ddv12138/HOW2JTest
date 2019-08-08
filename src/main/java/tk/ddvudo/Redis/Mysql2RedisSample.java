@@ -1,5 +1,6 @@
 package tk.ddvudo.Redis;
 
+import com.alibaba.fastjson.JSON;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -33,7 +34,7 @@ public class Mysql2RedisSample {
         try (SqlSession session = mysql2RedisSample.sqlSessionFactory.openSession()) {
             EnterpriseDao enterMapper = session.getMapper(EnterpriseDao.class);
             Map enterprise = enterMapper.selectByPrimaryKey_Map(1);
-            System.out.println(enterprise);
+            System.out.println(JSON.toJSONString(enterprise));
         }
     }
 }

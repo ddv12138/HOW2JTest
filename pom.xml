@@ -100,6 +100,11 @@
             <artifactId>jedis</artifactId>
             <version>3.1.0</version>
         </dependency>
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>1.2.59</version>
+        </dependency>
     </dependencies>
     <build>
         <plugins>
