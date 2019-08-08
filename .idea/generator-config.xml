@@ -3,6 +3,34 @@
   <component name="PersistentConfig">
     <option name="historyConfigList">
       <map>
+        <entry key="Enterprise_all">
+          <value>
+            <Config>
+              <option name="comment" value="true" />
+              <option name="daoMvnPath" value="src/main/java" />
+              <option name="daoName" value="EnterpriseDao" />
+              <option name="daoPackage" value="tk.ddvudo.Mybatis.UseAnnotation" />
+              <option name="daoPostfix" value="Dao" />
+              <option name="daoTargetFolder" value="$PROJECT_DIR$" />
+              <option name="modelMvnPath" value="src/main/java" />
+              <option name="modelName" value="Enterprise" />
+              <option name="modelPackage" value="tk.ddvudo.Mybatis.JavaBeans" />
+              <option name="modelTargetFolder" value="$PROJECT_DIR$" />
+              <option name="name" value="Enterprise_all" />
+              <option name="needToStringHashcodeEquals" value="true" />
+              <option name="offsetLimit" value="true" />
+              <option name="overrideXML" value="true" />
+              <option name="primaryKey" value="Id" />
+              <option name="projectFolder" value="$PROJECT_DIR$" />
+              <option name="tableName" value="Enterprise_all" />
+              <option name="useExample" value="true" />
+              <option name="useSchemaPrefix" value="true" />
+              <option name="xmlMvnPath" value="src/main/resources" />
+              <option name="xmlPackage" value="tk.ddvudo.Mybatis.beanXmlConfig" />
+              <option name="xmlTargetFolder" value="$PROJECT_DIR$" />
+            </Config>
+          </value>
+        </entry>
         <entry key="Resourcetable">
           <value>
             <Config>

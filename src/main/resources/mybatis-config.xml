@@ -15,48 +15,45 @@
             <dataSource type="POOLED">
                 <property name="driver" value="com.mysql.cj.jdbc.Driver"/>
                 <property name="url"
-                          value="jdbc:mysql://ddvudo.top:3306/how2jdb?characterEncoding=UTF-8&amp;autoReconnect=true&amp;failOverReadOnly=false&amp;allowMultiQueries=true"/>
+                          value="jdbc:mysql://188.131.157.4:3306/how2jdb?characterEncoding=UTF-8&amp;autoReconnect=true&amp;failOverReadOnly=false&amp;allowMultiQueries=true"/>
                 <property name="username" value="how2j"/>
                 <property name="password" value="liukang"/>
             </dataSource>
-            <!--            <dataSource type="C3P0DatasourceFactory">-->
-            <!--                <property name="driverClass" value="com.mysql.cj.jdbc.Driver"/>-->
-            <!--                <property name="jdbcUrl"-->
-            <!--                          value="jdbc:mysql://tk.ddvudo.java.tk:3306/how2jdb?characterEncoding=UTF-8&amp;autoReconnect=true&amp;failOverReadOnly=false&amp;allowMultiQueries=true"/>-->
-            <!--                <property name="user" value="how2j"/>-->
-            <!--                <property name="password" value="liukang"/>-->
-            <!--                &lt;!&ndash; 连接池初始化大小为3 &ndash;&gt;-->
-            <!--                <property name="initialPoolSize" value="3"/>-->
-            <!--                &lt;!&ndash; 连接池最大为10 &ndash;&gt;-->
-            <!--                <property name="maxPoolSize" value="10"/>-->
-            <!--                &lt;!&ndash; 连接池最小为3 &ndash;&gt;-->
-            <!--                <property name="minPoolSize" value="3"/>-->
-            <!--                &lt;!&ndash; 连接池在无空闲连接可用时一次性最多创建的新数据库连接数  &ndash;&gt;-->
-            <!--                <property name="acquireIncrement" value="5"/>-->
-            <!--                &lt;!&ndash; 连接的最大空闲时间，如果超过这个时间（秒），某个数据库连接还没有被使用，则会断开掉这个连接。如果为0，则永远不会断开连接,即回收此连接 &ndash;&gt;-->
-            <!--                <property name="maxIdleTime" value="30"/>-->
+        </environment>
+        <environment id="development_C3P0">
+            <transactionManager type="JDBC"/>
+            <dataSource type="C3P0DatasourceFactory">
+                <property name="driverClass" value="com.mysql.cj.jdbc.Driver"/>
+                <property name="jdbcUrl"
+                          value="jdbc:mysql://188.131.157.4:3306/how2jdb?characterEncoding=UTF-8&amp;autoReconnect=true&amp;failOverReadOnly=false&amp;allowMultiQueries=true"/>
+                <property name="user" value="how2j"/>
+                <property name="password" value="liukang"/>
+                <!-- 连接池初始化大小为3 -->
+                <property name="initialPoolSize" value="3"/>
+                <!-- 连接池最大为10 -->
+                <property name="maxPoolSize" value="10"/>
+                <!-- 连接池最小为3 -->
+                <property name="minPoolSize" value="3"/>
+                <!-- 连接池在无空闲连接可用时一次性最多创建的新数据库连接数  -->
+                <property name="acquireIncrement" value="5"/>
+                <!-- 连接的最大空闲时间，如果超过这个时间（秒），某个数据库连接还没有被使用，则会断开掉这个连接。如果为0，则永远不会断开连接,即回收此连接 -->
+                <property name="maxIdleTime" value="30"/>
 
-            <!--                &lt;!&ndash; 最大的Statement数量 &ndash;&gt;-->
-            <!--                <property name="maxStatements" value="500"/>-->
-            <!--                &lt;!&ndash; 每个连接启动的最大Statement数量 &ndash;&gt;-->
-            <!--                <property name="maxStatementsPerConnection" value="50"/>-->
-            <!--                &lt;!&ndash; 同时运行的线程数 &ndash;&gt;-->
-            <!--                <property name="numHelperThreads" value="5"/>-->
-            <!--            </dataSource>-->
+                <!-- 最大的Statement数量 -->
+                <property name="maxStatements" value="500"/>
+                <!-- 每个连接启动的最大Statement数量 -->
+                <property name="maxStatementsPerConnection" value="50"/>
+                <!-- 同时运行的线程数 -->
+                <property name="numHelperThreads" value="5"/>
+            </dataSource>
         </environment>
     </environments>
     <mappers>
-        <!--        <mapper resource="tk/ddvudo/Mybatis/beanXmlConfig/MyTable.xml"/>-->
-        <!--        <mapper resource="tk/ddvudo/Mybatis/beanXmlConfig/Category.xml"/>-->
-        <!--        <mapper resource="tk/ddvudo/Mybatis/beanXmlConfig/Dictionary.xml"/>-->
-        <!--        <mapper resource="tk/ddvudo/Mybatis/beanXmlConfig/Order.xml"/>-->
-        <!--        <mapper resource="tk/ddvudo/Mybatis/beanXmlConfig/OrderItem.xml"/>-->
-        <!--        <mapper resource="tk/ddvudo/Mybatis/beanXmlConfig/Product.xml"/>-->
-
         <mapper resource="generator/ResourcetableDao.xml"/>
         <mapper resource="generator/RoleResMapDao.xml"/>
         <mapper resource="generator/RoletableDao.xml"/>
         <mapper resource="generator/UserRoleMapDao.xml"/>
         <mapper resource="generator/UsertableDao.xml"/>
+        <mapper resource="tk/ddvudo/Mybatis/beanXmlConfig/EnterpriseDao.xml"/>
     </mappers>
 </configuration>
