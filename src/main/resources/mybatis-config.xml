@@ -9,7 +9,7 @@
     <typeAliases>
         <package name="java.tk.ddvudo.Mybatis"/>
     </typeAliases>
-    <environments default="development_C3P0">
+    <environments default="development">
         <environment id="development">
             <transactionManager type="JDBC"/>
             <dataSource type="POOLED">
