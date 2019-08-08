@@ -1,6 +1,7 @@
 package tk.ddvudo.Mybatis.UseAnnotation;
 
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.session.ResultHandler;
 import tk.ddvudo.Mybatis.JavaBeans.Enterprise;
 import tk.ddvudo.Mybatis.JavaBeans.EnterpriseExample;
 
@@ -20,9 +21,11 @@ public interface EnterpriseDao {
 
     List<Enterprise> selectByExample(EnterpriseExample example);
 
-    Enterprise selectByPrimaryKey(Integer id);
+    List<Map> selectByExample_Map(EnterpriseExample example);
 
-    Map selectByExample_Map(EnterpriseExample example);
+    void selectByExample_Map_Forward(EnterpriseExample example, ResultHandler<Enterprise> handler);
+
+    Enterprise selectByPrimaryKey(Integer id);
 
     Map selectByPrimaryKey_Map(Integer id);
 

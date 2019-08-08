@@ -151,6 +151,9 @@ public class Enterprise implements Serializable {
         this.address = address;
     }
 
+    public String getKey() {
+        return this.getName() + "/" + this.getRegday() + "/" + this.getLegalrepresentative();
+    }
     @Override
     public boolean equals(Object that) {
         if (this == that) {
