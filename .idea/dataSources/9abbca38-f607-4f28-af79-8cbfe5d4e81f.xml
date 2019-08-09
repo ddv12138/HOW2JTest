@@ -9,14 +9,15 @@
     </root>
     <schema id="2" parent="1" name="how2jdb">
       <Current>1</Current>
-      <Visible>1</Visible>
       <Collation>utf8_bin</Collation>
+      <Visible>1</Visible>
     </schema>
     <schema id="3" parent="1" name="how2jdb2">
       <Collation>utf8mb4_general_ci</Collation>
     </schema>
     <schema id="4" parent="1" name="information_schema">
       <Collation>utf8_general_ci</Collation>
+      <Substituted>1</Substituted>
     </schema>
     <collation id="5" parent="1" name="armscii8_bin">
       <Charset>armscii8</Charset>

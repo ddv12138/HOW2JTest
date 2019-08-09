@@ -12,7 +12,7 @@ public class SpeedTest {
             Thread.sleep(1000);
             Long end = jedis.hlen("Enterprise");
             if (end - start == 0) {
-                System.out.println(end - start + "条/秒，已插入" + end + "条");
+//                System.out.println(end - start + "条/秒，已插入" + end + "条");
                 continue;
             }
             System.out.println(end - start + "条/秒，已插入" + end + "条，预计还需要" + 5880000 / ((end - start) * 60) + "分钟");

@@ -6,98 +6,79 @@ import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import redis.clients.jedis.Jedis;
+import redis.clients.jedis.ScanParams;
 import tk.ddvudo.Mybatis.JavaBeans.Enterprise;
 import tk.ddvudo.Mybatis.JavaBeans.EnterpriseExample;
 import tk.ddvudo.Mybatis.UseAnnotation.EnterpriseDao;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class Mysql2RedisSample {
     private SqlSessionFactory sqlSessionFactory;
-    private Jedis jedis;
+    private static String redisServer = "188.131.157.4";
+    private static int redisPort = 6379;
+    private static String redisAuth = "liukang951006";
 
     private Mysql2RedisSample() {
         try {
             String resource = "mybatis-config.xml";
             sqlSessionFactory = new SqlSessionFactoryBuilder().build(Resources.getResourceAsStream(resource));
-            jedis = new Jedis("188.131.157.4", 6379);
-            jedis.auth("liukang951006");
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
     public static void main(String... args) {
-        singleThread();
+//        clearCache();
+//        singleThread();
+        Search();
     }
 
-    static void singleThread() {
+    private static void Search() {
+        Jedis jedis = new Jedis(redisServer, redisPort);
+        jedis.auth(redisAuth);
+        jedis.hscan("Enterprise", "0", new ScanParams().match("*上海*"));
+    }
+
+    private static void clearCache() {
+        Jedis jedis = new Jedis(redisServer, redisPort);
+        jedis.auth(redisAuth);
+        jedis.expire("Enterprise", 1);
+    }
+
+    private static void singleThread() {
         Mysql2RedisSample mysql2RedisSample = new Mysql2RedisSample();
+        ExecutorService pool = Executors.newCachedThreadPool();
         try (SqlSession session = mysql2RedisSample.sqlSessionFactory.openSession()) {
             EnterpriseDao enterMapper = session.getMapper(EnterpriseDao.class);
             EnterpriseExample enterpriseExample = new EnterpriseExample();
             enterpriseExample.setOrderByClause("id desc");
             long count = enterMapper.countByExample(enterpriseExample);
-            int pageSize = 10000;
+            int pageSize = 100;
             for (int i = 0; i * pageSize < count; i++) {
                 long offset = (i * pageSize);
                 enterpriseExample.setOffset(offset);
                 enterpriseExample.setLimit(pageSize);
                 List<Enterprise> res = enterMapper.selectByExample(enterpriseExample);
-                new Thread(() -> {
+                pool.submit(() -> {
+                    System.out.println("线程" + Thread.currentThread().getName());
+                    System.out.println(res);
+                    Jedis jedis = new Jedis(redisServer, redisPort);
+                    jedis.auth(redisAuth);
+                    System.out.println(res.size());
                     for (Enterprise enterprise : res) {
-                        System.out.println("已处理id=" + enterprise.getId() + ",线程");
-                        mysql2RedisSample.jedis.hsetnx("Enterprise", enterprise.getKey(), JSON.toJSONString(enterprise));
+                        System.out.println("已处理id=" + enterprise.getId() + ",线程" + Thread.currentThread().getName());
+                        jedis.hsetnx("Enterprise", enterprise.getKey(), JSON.toJSONString(enterprise));
                     }
-                }).run();
+                });
             }
+            pool.shutdown();
+        } finally {
+            pool.shutdown();
         }
     }
 
-    static void singleThreadStream() {
-        Mysql2RedisSample mysql2RedisSample = new Mysql2RedisSample();
-        try (SqlSession session = mysql2RedisSample.sqlSessionFactory.openSession()) {
-            EnterpriseDao enterMapper = session.getMapper(EnterpriseDao.class);
-            EnterpriseExample enterpriseExample = new EnterpriseExample();
-            enterpriseExample.setOrderByClause("id desc");
-            enterMapper.selectByExample_Map_Forward(enterpriseExample, resultContext -> {
-                Enterprise enterprise = resultContext.getResultObject();
-                System.out.println("已处理id=" + enterprise.getId());
-                mysql2RedisSample.jedis.hsetnx("Enterprise", enterprise.getKey(), JSON.toJSONString(enterprise));
-            });
-        }
-    }
-
-    static void mutilThread() {
-        Mysql2RedisSample mysql2RedisSample = new Mysql2RedisSample();
-        try (SqlSession session = mysql2RedisSample.sqlSessionFactory.openSession()) {
-            EnterpriseDao enterMapper = session.getMapper(EnterpriseDao.class);
-            EnterpriseExample enterpriseExample = new EnterpriseExample();
-            long count = enterMapper.countByExample(enterpriseExample);
-            int pageSize = 100 * 10000;
-            for (int i = 0; i * pageSize < count; i++) {
-                long offset = (i * pageSize);
-                final long finalOffset = offset;
-                new Thread(() -> {
-                    try (SqlSession session_tmp = mysql2RedisSample.sqlSessionFactory.openSession()) {
-                        EnterpriseDao enterMapper_tmp = session_tmp.getMapper(EnterpriseDao.class);
-                        EnterpriseExample enterpriseExample_tmp = new EnterpriseExample();
-                        enterpriseExample_tmp.setOffset(finalOffset);
-                        System.out.println(finalOffset);
-                        enterpriseExample_tmp.setLimit(pageSize);
-                        enterMapper_tmp.selectByExample_Map_Forward(enterpriseExample_tmp, resultContext -> {
-                            Enterprise enterprise = resultContext.getResultObject();
-                            System.out.println("已处理id=" + enterprise.getId());
-                            mysql2RedisSample.jedis.hsetnx("Enterprise", enterprise.getKey(), JSON.toJSONString(enterprise));
-                        });
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }).start();
-            }
-//            System.out.println(mysql2RedisSample.jedis.hgetAll("Enterprise"));
-//            System.out.println(mysql2RedisSample.jedis.hget("Enterprise", "上海?"));
-        }
-    }
 }
