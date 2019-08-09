@@ -6,7 +6,6 @@ import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import redis.clients.jedis.Jedis;
-import redis.clients.jedis.ScanParams;
 import tk.ddvudo.Mybatis.JavaBeans.Enterprise;
 import tk.ddvudo.Mybatis.JavaBeans.EnterpriseExample;
 import tk.ddvudo.Mybatis.UseAnnotation.EnterpriseDao;
@@ -32,15 +31,8 @@ public class Mysql2RedisSample {
     }
 
     public static void main(String... args) {
-//        clearCache();
-//        singleThread();
-        Search();
-    }
-
-    private static void Search() {
-        Jedis jedis = new Jedis(redisServer, redisPort);
-        jedis.auth(redisAuth);
-        jedis.hscan("Enterprise", "0", new ScanParams().match("*上海*"));
+        clearCache();
+        singleThread();
     }
 
     private static void clearCache() {
@@ -57,7 +49,7 @@ public class Mysql2RedisSample {
             EnterpriseExample enterpriseExample = new EnterpriseExample();
             enterpriseExample.setOrderByClause("id desc");
             long count = enterMapper.countByExample(enterpriseExample);
-            int pageSize = 100;
+            int pageSize = 1000;
             for (int i = 0; i * pageSize < count; i++) {
                 long offset = (i * pageSize);
                 enterpriseExample.setOffset(offset);
@@ -71,10 +63,10 @@ public class Mysql2RedisSample {
                     for (Enterprise enterprise : res) {
                         System.out.println("已处理id=" + enterprise.getId() + ",线程" + Thread.currentThread().getName());
                         jedis.hsetnx("Enterprise", enterprise.getKey(), JSON.toJSONString(enterprise));
+                        this.wait(100);
                     }
                 });
             }
-            pool.shutdown();
         } finally {
             pool.shutdown();
         }
