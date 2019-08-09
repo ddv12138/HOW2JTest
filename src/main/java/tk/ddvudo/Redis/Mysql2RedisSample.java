@@ -64,8 +64,7 @@ public class Mysql2RedisSample {
                 enterpriseExample.setLimit(pageSize);
                 List<Enterprise> res = enterMapper.selectByExample(enterpriseExample);
                 pool.submit(() -> {
-                    System.out.println("线程" + Thread.currentThread().getName());
-                    System.out.println(res);
+                    System.out.println("=====================================================================================");
                     Jedis jedis = new Jedis(redisServer, redisPort);
                     jedis.auth(redisAuth);
                     System.out.println(res.size());
