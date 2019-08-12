@@ -17,6 +17,7 @@ import java.util.concurrent.Executors;
 
 public class Mysql2RedisSample {
     private SqlSessionFactory sqlSessionFactory;
+    //    private static String redisServer = "localhost";
     private static String redisServer = "188.131.157.4";
     private static int redisPort = 6379;
     private static String redisAuth = "liukang951006";
@@ -52,18 +53,23 @@ public class Mysql2RedisSample {
             int pageSize = 1000;
             for (int i = 0; i * pageSize < count; i++) {
                 long offset = (i * pageSize);
-                enterpriseExample.setOffset(offset);
-                enterpriseExample.setLimit(pageSize);
-                List<Enterprise> res = enterMapper.selectByExample(enterpriseExample);
+                System.out.println(offset + "/" + pageSize);
                 pool.submit(() -> {
-                    System.out.println("=====================================================================================");
-                    Jedis jedis = new Jedis(redisServer, redisPort);
-                    jedis.auth(redisAuth);
-                    System.out.println(res.size());
-                    for (Enterprise enterprise : res) {
-                        System.out.println("已处理id=" + enterprise.getId() + ",线程" + Thread.currentThread().getName());
-                        jedis.hsetnx("Enterprise", enterprise.getKey(), JSON.toJSONString(enterprise));
-                        this.wait(100);
+                    try (SqlSession session_tmp = mysql2RedisSample.sqlSessionFactory.openSession()) {
+                        System.out.println("=====================================================================================");
+                        EnterpriseDao enterMapper_tmp = session_tmp.getMapper(EnterpriseDao.class);
+                        EnterpriseExample enterpriseExample_tmp = new EnterpriseExample();
+                        enterpriseExample_tmp.setOrderByClause("id desc");
+                        enterpriseExample_tmp.setOffset(offset);
+                        enterpriseExample_tmp.setLimit(pageSize);
+                        List<Enterprise> res = enterMapper_tmp.selectByExample(enterpriseExample_tmp);
+                        Jedis jedis = new Jedis(redisServer, redisPort);
+                        jedis.auth(redisAuth);
+                        System.out.println(res.size());
+                        for (Enterprise enterprise : res) {
+                            System.out.println("已处理id=" + enterprise.getId() + ",线程" + Thread.currentThread().getName());
+                            jedis.hsetnx("Enterprise", enterprise.getKey(), JSON.toJSONString(enterprise));
+                        }
                     }
                 });
             }
