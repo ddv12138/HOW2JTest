@@ -1,5 +1,6 @@
 package tk.ddvudo.Geode;
 
+import com.alibaba.fastjson.JSON;
 import org.apache.geode.cache.Cache;
 import org.apache.geode.cache.CacheFactory;
 import org.apache.geode.cache.Region;
@@ -8,7 +9,16 @@ import org.apache.geode.cache.client.ClientCache;
 import org.apache.geode.cache.client.ClientCacheFactory;
 import org.apache.geode.cache.client.ClientRegionFactory;
 import org.apache.geode.cache.client.ClientRegionShortcut;
+import org.apache.ibatis.io.Resources;
+import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactory;
+import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.apache.log4j.Logger;
+import tk.ddvudo.Mybatis.JavaBeans.Enterprise;
+import tk.ddvudo.Mybatis.JavaBeans.EnterpriseExample;
+import tk.ddvudo.Mybatis.UseAnnotation.EnterpriseDao;
+
+import java.util.List;
 
 public class Sample {
     static String regionName = "Enterprise";
