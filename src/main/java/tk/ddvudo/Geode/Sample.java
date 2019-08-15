@@ -22,20 +22,20 @@ public class Sample {
             Region region = regionFactory.create(regionName);
             logger.info(clientCache.getCurrentServers());
             region.put("1", "1");
-//            logger.info(region.get("1"));
-//            SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(Resources.getResourceAsStream("mybatis-config.xml"));
-//            try (SqlSession session = sqlSessionFactory.openSession();) {
-//                EnterpriseDao enterMapper = session.getMapper(EnterpriseDao.class);
-//                EnterpriseExample enterpriseExample = new EnterpriseExample();
-//                enterpriseExample.setOrderByClause("id desc");
-//                enterpriseExample.setLimit(10);
-//                long count = enterMapper.countByExample(enterpriseExample);
-//                List<Enterprise> res = enterMapper.selectByExample(enterpriseExample);
-//                for (Enterprise enterprise : res) {
-//                    System.out.println("已处理id=" + enterprise.getId() + ",线程" + Thread.currentThread().getName());
-//                    region.put(enterprise.getKey(), JSON.toJSONString(enterprise));
-//                }
-//            }
+            logger.info(region.get("1"));
+            SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(Resources.getResourceAsStream("mybatis-config.xml"));
+            try (SqlSession session = sqlSessionFactory.openSession()) {
+                EnterpriseDao enterMapper = session.getMapper(EnterpriseDao.class);
+                EnterpriseExample enterpriseExample = new EnterpriseExample();
+                enterpriseExample.setOrderByClause("id desc");
+                enterpriseExample.setLimit(10);
+                long count = enterMapper.countByExample(enterpriseExample);
+                List<Enterprise> res = enterMapper.selectByExample(enterpriseExample);
+                for (Enterprise enterprise : res) {
+                    System.out.println("已处理id=" + enterprise.getId() + ",线程" + Thread.currentThread().getName());
+                    region.put(enterprise.getKey(), JSON.toJSONString(enterprise));
+                }
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
