@@ -1,12 +1,10 @@
 package tk.ddvudo.Geode;
 
-import com.alibaba.fastjson.JSON;
 import org.apache.geode.cache.*;
 import org.apache.geode.cache.client.ClientCache;
 import org.apache.geode.cache.client.ClientCacheFactory;
 import org.apache.geode.cache.client.ClientRegionFactory;
 import org.apache.geode.cache.client.ClientRegionShortcut;
-import org.apache.ibatis.cache.decorators.LoggingCache;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
