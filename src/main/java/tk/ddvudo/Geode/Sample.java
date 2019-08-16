@@ -1,14 +1,12 @@
 package tk.ddvudo.Geode;
 
 import com.alibaba.fastjson.JSON;
-import org.apache.geode.cache.Cache;
-import org.apache.geode.cache.CacheFactory;
-import org.apache.geode.cache.Region;
-import org.apache.geode.cache.RegionFactory;
+import org.apache.geode.cache.*;
 import org.apache.geode.cache.client.ClientCache;
 import org.apache.geode.cache.client.ClientCacheFactory;
 import org.apache.geode.cache.client.ClientRegionFactory;
 import org.apache.geode.cache.client.ClientRegionShortcut;
+import org.apache.ibatis.cache.decorators.LoggingCache;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -26,24 +24,21 @@ public class Sample {
     public static void main(String... args) {
         Logger logger = Logger.getRootLogger();
         try {
-            Cache cache = new CacheFactory().create();
-            ClientCache clientCache = new ClientCacheFactory().addPoolLocator("localhost", 10334).create();
-            ClientRegionFactory regionFactory = clientCache.createClientRegionFactory(ClientRegionShortcut.CACHING_PROXY);
-            Region region = regionFactory.create(regionName);
-            logger.info(clientCache.getCurrentServers());
-            region.put("1", "1");
-            logger.info(region.get("1"));
+            ClientCache cache = new ClientCacheFactory().addPoolLocator("localhost", 10334).set("log-level", "ERROR").create();
+            ClientRegionFactory rf = cache.createClientRegionFactory(ClientRegionShortcut.PROXY);
+            Region region = rf.create(regionName);
+            region.clear();
             SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(Resources.getResourceAsStream("mybatis-config.xml"));
             try (SqlSession session = sqlSessionFactory.openSession()) {
                 EnterpriseDao enterMapper = session.getMapper(EnterpriseDao.class);
                 EnterpriseExample enterpriseExample = new EnterpriseExample();
                 enterpriseExample.setOrderByClause("id desc");
-                enterpriseExample.setLimit(10);
+                enterpriseExample.setLimit(10000);
                 long count = enterMapper.countByExample(enterpriseExample);
                 List<Enterprise> res = enterMapper.selectByExample(enterpriseExample);
                 for (Enterprise enterprise : res) {
                     System.out.println("已处理id=" + enterprise.getId() + ",线程" + Thread.currentThread().getName());
-                    region.put(enterprise.getKey(), JSON.toJSONString(enterprise));
+                    region.put(enterprise.getKey(), enterprise);
                 }
             }
         } catch (Exception e) {
