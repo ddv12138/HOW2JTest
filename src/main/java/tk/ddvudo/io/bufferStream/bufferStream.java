@@ -5,7 +5,7 @@ import java.io.*;
 public class bufferStream {
     public static void main(String[] args) throws IOException {
 //		basicUse();
-        removeComments(new File("./src/java.tk/tk.ddvudo/bufferStream/TestFile"));
+        removeComments(new File("./src/main/java/tk.ddvudo/bufferStream/TestFile"));
     }
 
     public static void basicUse() throws IOException {
