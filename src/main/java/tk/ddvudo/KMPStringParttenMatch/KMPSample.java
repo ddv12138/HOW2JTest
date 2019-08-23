@@ -1,27 +1,30 @@
 package tk.ddvudo.KMPStringParttenMatch;
 
+import com.sun.istack.NotNull;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public class KMPSample {
+    private static Logger logger = LoggerFactory.getLogger(KMPSample.class.getName());
+
     public static void main(String... args) {
-        String p = "ababaaaba";
+        String p = "111baaa11";
         //011234223
-        System.out.println(violentMatch(p, "baaa"));
-        int[] next = get_next(p);
-        for (int i : next) {
-            System.out.print(i + " , ");
-        }
+        logger.info(violentMatch(p, "baaa") + "");
     }
 
-    private static int violentMatch(String p, String t) {
-        for (int i = 0, j = 0; i < p.length() && j < t.length(); ) {
-            if (p.charAt(i) != t.charAt(j)) {
-                i = i - j + 1;
-                j = 0;
-            } else {
+    private static int violentMatch(@NotNull String p, String t) {
+        int i = 0, j = 0;
+        while (i < p.length() && j < t.length()) {
+            if (p.charAt(i) == t.charAt(j)) {
                 i++;
                 j++;
+            } else {
+                i = i - j + 1;
+                j = 0;
             }
             if (j == t.length()) {
-                return j - 1;
+                return i - j;
             }
         }
         return -1;
