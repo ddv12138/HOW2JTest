@@ -1,4 +1,4 @@
-package tk.ddvudo.NetCodeing;
+package tk.ddvudo.NetCoding;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;

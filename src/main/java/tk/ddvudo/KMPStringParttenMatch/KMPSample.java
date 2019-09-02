@@ -8,8 +8,8 @@ public class KMPSample {
     private static Logger logger = LoggerFactory.getLogger(KMPSample.class.getName());
 
     public static void main(String... args) {
-        String p = "111baaa11";
-        //011234223
+        String p = "abcbaaaba";
+        //
         logger.info(violentMatch(p, "baaa") + "");
     }
 
