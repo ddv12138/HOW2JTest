@@ -9,15 +9,15 @@ public class KMPSample {
     private static Logger logger = LoggerFactory.getLogger(KMPSample.class.getName());
 
     public static void main(String... args) {
-        String s = "abababaaa";
+        String s = "abababaa";
         String p = "abaa";
-        int[] next = get_next(s);
-        logger.info("next-->" + JSON.toJSONString(next));
         logger.info(violentMatch(s, p) + "");
-        logger.info(KMPMatch(s, p, next) + "");
+        logger.info(KMPMatch(s, p) + "");
     }
 
-    private static int KMPMatch(String p, String t, int[] next) {
+    private static int KMPMatch(String p, String t) {
+        int[] next = get_next(p);
+        logger.info("next-->" + JSON.toJSONString(next));
         int i = 0, j = 0, count = 0;
         while (i < p.length() && j < t.length()) {
             if (j == 0 || p.charAt(i) == t.charAt(j)) {
