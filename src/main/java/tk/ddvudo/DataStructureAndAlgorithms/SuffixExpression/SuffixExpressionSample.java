@@ -26,7 +26,7 @@ public class SuffixExpressionSample {
 		Map<Character, Integer> rule = new HashMap<>();
 		rule.put('+', 0);
 		rule.put('-', 0);
-		rule.put('*', 1);
+		rule.put('*', 2);
 		rule.put('/', 2);
 		rule.put('(', 3);
 		rule.put(')', 3);
@@ -51,14 +51,13 @@ public class SuffixExpressionSample {
 						while (!signStack.isEmpty() && signStack.peek() != '(') {
 							res.append(signStack.pop()).append(" ");
 						}
-					} else if (rule.get(signTop) > 0 && signTop != '(' && signTop != ')' && rule.get(c) < rule.get(signTop)) {
-						char tmpsignTop = signStack.peek();
-						while (!signStack.isEmpty() && rule.get(c) < rule.get(tmpsignTop)) {
-							tmpsignTop = signStack.pop();
-							res.append(tmpsignTop).append(" ");
-						}
-						signStack.push(c);
 					} else {
+						char tmpsignTop = signStack.peek();
+						while (!signStack.isEmpty() && rule.get(c) <= rule.get(tmpsignTop)) {
+							res.append(tmpsignTop).append(" ");
+							if (!signStack.isEmpty())
+								tmpsignTop = signStack.pop();
+						}
 						signStack.push(c);
 					}
 				}
@@ -69,7 +68,7 @@ public class SuffixExpressionSample {
 		}
 		return res.toString().replaceAll("\\(", "")
 				.replaceAll("\\)", "")
-				.replaceAll(" {2}", " ");
+				.replaceAll("  ", " ");
 	}
 
 	private static double computeSuffixExperession(String SuffixExpression) {
