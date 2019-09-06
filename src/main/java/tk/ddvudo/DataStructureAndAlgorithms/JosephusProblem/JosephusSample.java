@@ -1,11 +1,10 @@
-package tk.ddvudo.DataStructureAndAlgorithms;
+package tk.ddvudo.DataStructureAndAlgorithms.JosephusProblem;
 
-import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class JosephusProblem {
-    private static Logger logger = LoggerFactory.getLogger(JosephusProblem.class.getName());
+public class JosephusSample {
+    private static Logger logger = LoggerFactory.getLogger(JosephusSample.class.getName());
 
     public static class node {
         int code;
@@ -14,14 +13,6 @@ public class JosephusProblem {
         public node(int code, node nest) {
             this.code = code;
             this.next = nest;
-        }
-
-        @Override
-        public String toString() {
-            return new ToStringBuilder(this)
-                    .append("code", code)
-                    .append("next", next)
-                    .toString();
         }
     }
 
