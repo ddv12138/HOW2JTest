@@ -15,7 +15,7 @@ public class SuffixExpressionSample {
 		logger.info(Expression);
 		String suffixExpression = getSuffixExpression(Expression);
 		logger.info(suffixExpression);
-		double value = computerSuffixExperession(suffixExpression);
+		double value = computeSuffixExperession(suffixExpression);
 		logger.info(value + "");
 	}
 
@@ -72,7 +72,7 @@ public class SuffixExpressionSample {
 				.replaceAll(" {2}", " ");
 	}
 
-	private static double computerSuffixExperession(String SuffixExpression) {
+	private static double computeSuffixExperession(String SuffixExpression) {
 		Stack<Double> stack = new Stack<>();
 		String[] expressionArr = SuffixExpression.split(" ");
 		for (String s : expressionArr) {
