@@ -3,60 +3,123 @@ package tk.ddvudo.DataStructureAndAlgorithms.SuffixExpression;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Stack;
 
 public class SuffixExpressionSample {
-    private static Logger logger = LoggerFactory.getLogger(SuffixExpressionSample.class.getName());
+	private static Logger logger = LoggerFactory.getLogger(SuffixExpressionSample.class.getName());
 
-    public static void main(String... args) {
-        String Expression = "46+5*(120-37)";
-        String suffixExpression = getSuffixExpression(Expression);
-        logger.info(suffixExpression);
-    }
+	public static void main(String... args) {
+		String Expression = "5*(120-37)/2*10";
+		logger.info(Expression);
+		String suffixExpression = getSuffixExpression(Expression);
+		logger.info(suffixExpression);
+		double value = computerSuffixExperession(suffixExpression);
+		logger.info(value + "");
+	}
 
-    private static String getSuffixExpression(String expression) {
-        String res = "";
-        Stack<Character> signStack = new Stack<Character>();
-        expression = expression.replaceAll(" ", "");
-        String rule = "+-_*/_()";
-        for (int i = 0; i < expression.toCharArray().length; i++) {
-            char c = expression.charAt(i);
-            if (c >= '0' && c <= '9') {
-                res += c;
-                if (expression.length() > i + 1) {
-                    char next_c = expression.charAt(i + 1);
-                    if (!(next_c >= '0' && next_c <= '9')) {
-                        res += " ";
-                    }
-                }
-            } else if (c == '+' || c == '-' || c == '*' || c == '/' || c == '(' || c == ')') {
-                if (signStack.isEmpty()) {
-                    signStack.push(c);
-                } else {
-                    char signTop = signStack.peek();
-                    if (c == ')') {
-                        while (!signStack.isEmpty() && signStack.peek() != '(') {
-                            res += signStack.pop() + " ";
-                        }
-                    } else if (rule.indexOf((signTop)) > 0 && rule.indexOf(c) < rule.indexOf(signTop) && signTop != '(' && signTop != ')') {
-                        char tmpsignTop = signStack.peek();
-                        while (!signStack.isEmpty() && rule.indexOf(c) < rule.indexOf(tmpsignTop)) {
-                            tmpsignTop = signStack.pop();
-                            res += tmpsignTop + " ";
-                        }
-                    } else {
-                        signStack.push(c);
-                    }
-                }
-            }
-        }
-        while (!signStack.isEmpty()) {
-            if (signStack.peek() != '(' && signStack.peek() != ')') {
-                res += signStack.pop() + " ";
-            } else {
-                signStack.pop();
-            }
-        }
-        return res.replaceAll("\\(", "").replaceAll("\\)", "");
-    }
+	private static String getSuffixExpression(String expression) {
+		StringBuilder res = new StringBuilder();
+		Stack<Character> signStack = new Stack<>();
+		expression = expression.replaceAll(" ", "");
+		Map<Character, Integer> rule = new HashMap<>();
+		rule.put('+', 0);
+		rule.put('-', 0);
+		rule.put('*', 1);
+		rule.put('/', 2);
+		rule.put('(', 3);
+		rule.put(')', 3);
+		for (int i = 0; i < expression.toCharArray().length; i++) {
+			char c = expression.charAt(i);
+			if (c >= '0' && c <= '9') {
+				res.append(c);
+				if (expression.length() > i + 1) {
+					char next_c = expression.charAt(i + 1);
+					if (!(next_c >= '0' && next_c <= '9')) {
+						res.append(" ");
+					}
+				} else if (expression.length() == i + 1) {
+					res.append(" ");
+				}
+			} else if (c == '+' || c == '-' || c == '*' || c == '/' || c == '(' || c == ')') {
+				if (signStack.isEmpty()) {
+					signStack.push(c);
+				} else {
+					char signTop = signStack.peek();
+					if (c == ')') {
+						while (!signStack.isEmpty() && signStack.peek() != '(') {
+							res.append(signStack.pop()).append(" ");
+						}
+					} else if (rule.get(signTop) > 0 && signTop != '(' && signTop != ')' && rule.get(c) < rule.get(signTop)) {
+						char tmpsignTop = signStack.peek();
+						while (!signStack.isEmpty() && rule.get(c) < rule.get(tmpsignTop)) {
+							tmpsignTop = signStack.pop();
+							res.append(tmpsignTop).append(" ");
+						}
+						signStack.push(c);
+					} else {
+						signStack.push(c);
+					}
+				}
+			}
+		}
+		while (!signStack.isEmpty()) {
+			res.append(signStack.pop()).append(" ");
+		}
+		return res.toString().replaceAll("\\(", "")
+				.replaceAll("\\)", "")
+				.replaceAll(" {2}", " ");
+	}
+
+	private static double computerSuffixExperession(String SuffixExpression) {
+		Stack<Double> stack = new Stack<>();
+		String[] expressionArr = SuffixExpression.split(" ");
+		for (String s : expressionArr) {
+			if (isdigit(s)) {
+				stack.push(Double.valueOf(s));
+			} else {
+				switch (s) {
+					case "+":
+						double b = stack.pop();
+						double a = stack.pop();
+						double c = a + b;
+						logger.info("computing " + a + s + b + "=" + c);
+						stack.push(c);
+						break;
+					case "-":
+						b = stack.pop();
+						a = stack.pop();
+						c = a - b;
+						logger.info("computing " + a + s + b + "=" + c);
+						stack.push(c);
+						break;
+					case "*":
+						b = stack.pop();
+						a = stack.pop();
+						c = a * b;
+						logger.info("computing " + a + s + b + "=" + c);
+						stack.push(c);
+						break;
+					case "/":
+						b = stack.pop();
+						a = stack.pop();
+						c = a / b;
+						logger.info("computing " + a + s + b + "=" + c);
+						stack.push(c);
+						break;
+				}
+			}
+		}
+		return stack.pop();
+	}
+
+	private static boolean isdigit(String s) {
+		for (char c : s.toCharArray()) {
+			if (!(c >= '0' && c <= '9')) {
+				return false;
+			}
+		}
+		return true;
+	}
 }
