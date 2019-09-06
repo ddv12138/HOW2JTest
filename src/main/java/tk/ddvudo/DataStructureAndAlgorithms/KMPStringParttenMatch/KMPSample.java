@@ -1,4 +1,4 @@
-package tk.ddvudo.KMPStringParttenMatch;
+package tk.ddvudo.DataStructureAndAlgorithms.KMPStringParttenMatch;
 
 import com.alibaba.fastjson.JSON;
 import com.sun.istack.NotNull;
