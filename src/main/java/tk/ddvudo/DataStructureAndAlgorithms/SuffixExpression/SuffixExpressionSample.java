@@ -11,7 +11,7 @@ public class SuffixExpressionSample {
 	private static Logger logger = LoggerFactory.getLogger(SuffixExpressionSample.class.getName());
 
 	public static void main(String... args) {
-		String Expression = "5*(120-37)/2*10";
+		String Expression = "(46+5*(120-37))/(46+5*(120-37))*(46+5*(120-37))/(46+5*(120-37))+(5-10)/(1+5-(2+3))";
 		logger.info(Expression);
 		String suffixExpression = getSuffixExpression(Expression);
 		logger.info(suffixExpression);
@@ -26,10 +26,8 @@ public class SuffixExpressionSample {
 		Map<Character, Integer> rule = new HashMap<>();
 		rule.put('+', 0);
 		rule.put('-', 0);
-		rule.put('*', 2);
-		rule.put('/', 2);
-		rule.put('(', 3);
-		rule.put(')', 3);
+		rule.put('*', 1);
+		rule.put('/', 1);
 		for (int i = 0; i < expression.toCharArray().length; i++) {
 			char c = expression.charAt(i);
 			if (c >= '0' && c <= '9') {
@@ -46,17 +44,19 @@ public class SuffixExpressionSample {
 				if (signStack.isEmpty()) {
 					signStack.push(c);
 				} else {
-					char signTop = signStack.peek();
 					if (c == ')') {
-						while (!signStack.isEmpty() && signStack.peek() != '(') {
-							res.append(signStack.pop()).append(" ");
+						while (!signStack.isEmpty()) {
+							if (signStack.peek() != '(') {
+								res.append(signStack.pop()).append(" ");
+							} else {
+								signStack.pop();
+								break;
+							}
 						}
 					} else {
-						char tmpsignTop = signStack.peek();
-						while (!signStack.isEmpty() && rule.get(c) <= rule.get(tmpsignTop)) {
-							res.append(tmpsignTop).append(" ");
-							if (!signStack.isEmpty())
-								tmpsignTop = signStack.pop();
+						while (!signStack.isEmpty() && rule.containsKey(c) && rule.containsKey(signStack.peek())
+								&& rule.get(c) < rule.get(signStack.peek())) {
+							res.append(signStack.pop()).append(" ");
 						}
 						signStack.push(c);
 					}
@@ -68,7 +68,7 @@ public class SuffixExpressionSample {
 		}
 		return res.toString().replaceAll("\\(", "")
 				.replaceAll("\\)", "")
-				.replaceAll("  ", " ");
+				.replaceAll(" {2}", " ");
 	}
 
 	private static double computeSuffixExperession(String SuffixExpression) {
