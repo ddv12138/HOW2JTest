@@ -21,13 +21,13 @@ public class SuffixExpressionSample {
 
 	private static String getSuffixExpression(String expression) {
 		StringBuilder res = new StringBuilder();
-		Stack<Character> signStack = new Stack<>();
 		expression = expression.replaceAll(" ", "");
 		Map<Character, Integer> rule = new HashMap<>();
 		rule.put('+', 0);
 		rule.put('-', 0);
 		rule.put('*', 1);
 		rule.put('/', 1);
+		Stack<Character> signStack = new Stack<>();
 		for (int i = 0; i < expression.toCharArray().length; i++) {
 			char c = expression.charAt(i);
 			if (c >= '0' && c <= '9') {
