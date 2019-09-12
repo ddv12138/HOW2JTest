@@ -18,7 +18,7 @@ public class JosephusSample {
 	}
 
 	public static void main(String... args) {
-		int num = 5, killnum = 3, length = num;
+		int num = 42, killnum = 3, length = num;
 		//初始化单循环链表
 		node head = new node(1, null);
 		head.next = head;
