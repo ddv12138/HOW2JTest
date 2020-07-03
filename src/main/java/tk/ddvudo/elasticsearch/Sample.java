@@ -16,6 +16,7 @@ import tk.ddvudo.Mybatis.UseAnnotation.EnterpriseDao;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -34,8 +35,8 @@ public class Sample {
 		EnterpriseDao enterpriseDao = session.getMapper(EnterpriseDao.class);
 		EnterpriseExample example = new EnterpriseExample();
 		example.setOrderByClause("\"Id\"");
-		example.setOffset((long) 32279);
-		example.setLimit(100000);
+		example.setOffset((long) 250500);
+//		example.setLimit(50000);
 		myResultHandler<Enterprise> resultHandler = new myResultHandler<>();
 		enterpriseDao.selectByExample_Map_Forward(example, resultHandler);
 		resultHandler.handle();
@@ -45,11 +46,11 @@ public class Sample {
 	static class myResultHandler<E> implements ResultHandler {
 		private final short MAX_POOL_SIZE = 500;
 		private final Set<IndexRequest> requestSet = new HashSet<>();
+		int count = 0;
 
 		@Override
 		public void handleResult(ResultContext resultContext) {
 			Enterprise tmp = (Enterprise) resultContext.getResultObject();
-
 			IndexRequest request = new IndexRequest().id(String.valueOf(tmp.getId())).index("enterprise");
 			request.source(JSON.toJSONString(tmp), XContentType.JSON);
 			requestSet.add(request);
@@ -59,10 +60,14 @@ public class Sample {
 		}
 
 		private void handle() {
+			if (requestSet.size() == 0)
+				return;
 			BulkRequest bulkRequest = new BulkRequest();
 			requestSet.forEach(bulkRequest::add);
 			try {
 				client.bulk(bulkRequest, RequestOptions.DEFAULT);
+				count += MAX_POOL_SIZE;
+				System.out.println(new Date().toString() + "--累计" + count + "条");
 			} catch (IOException e) {
 				e.printStackTrace();
 			} finally {
