@@ -13,11 +13,11 @@
         <environment id="development">
             <transactionManager type="JDBC"/>
             <dataSource type="POOLED">
-                <property name="driver" value="com.mysql.cj.jdbc.Driver"/>
+                <property name="driver" value="org.postgresql.Driver"/>
                 <property name="url"
-                          value="jdbc:mysql://188.131.157.4:3306/how2jdb?characterEncoding=UTF-8&amp;autoReconnect=true&amp;failOverReadOnly=false&amp;allowMultiQueries=true"/>
-                <property name="username" value="how2j"/>
-                <property name="password" value="liukang"/>
+                          value="jdbc:postgresql://149.129.74.179:5432/how2jdb?characterEncoding=UTF-8&amp;autoReconnect=true&amp;failOverReadOnly=false&amp;allowMultiQueries=true&amp;useSSL=false&amp;serverTimezone=GMT%2B8"/>
+                <property name="username" value="postgres"/>
+                <property name="password" value="liukang951006"/>
             </dataSource>
         </environment>
         <environment id="development_local">
@@ -25,7 +25,7 @@
             <dataSource type="POOLED">
                 <property name="driver" value="com.mysql.cj.jdbc.Driver"/>
                 <property name="url"
-                          value="jdbc:mysql://localhost:3306/how2jdb?characterEncoding=UTF-8&amp;autoReconnect=true&amp;failOverReadOnly=false&amp;allowMultiQueries=true"/>
+                          value="jdbc:mysql://localhost:3306/how2jdb?characterEncoding=UTF-8&amp;amp;autoReconnect=true&amp;amp;failOverReadOnly=false&amp;amp;allowMultiQueries=true"/>
                 <property name="username" value="how2j"/>
                 <property name="password" value="liukang"/>
             </dataSource>
@@ -35,7 +35,7 @@
             <dataSource type="C3P0DatasourceFactory">
                 <property name="driverClass" value="com.mysql.cj.jdbc.Driver"/>
                 <property name="jdbcUrl"
-                          value="jdbc:mysql://188.131.157.4:3306/how2jdb?characterEncoding=UTF-8&amp;autoReconnect=true&amp;failOverReadOnly=false&amp;allowMultiQueries=true"/>
+                          value="jdbc:mysql://188.131.157.4:3306/how2jdb?characterEncoding=UTF-8&amp;amp;autoReconnect=true&amp;amp;failOverReadOnly=false&amp;amp;allowMultiQueries=true"/>
                 <property name="user" value="how2j"/>
                 <property name="password" value="liukang"/>
                 <!-- 连接池初始化大小为3 -->

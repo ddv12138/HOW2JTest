@@ -1,7 +1,6 @@
 package tk.ddvudo.Mybatis.JavaBeans;
 
 import java.io.Serializable;
-import java.util.Date;
 
 /**
  * Enterprise_all
@@ -22,9 +21,9 @@ public class Enterprise implements Serializable {
     private String code;
 
     /**
-     * 注册日期
-     */
-    private Date regday;
+	 * 注册日期
+	 */
+	private String regday;
 
     /**
      * 企业类型
@@ -87,13 +86,13 @@ public class Enterprise implements Serializable {
         this.code = code;
     }
 
-    public Date getRegday() {
-        return regday;
-    }
+	public String getRegday() {
+		return regday;
+	}
 
-    public void setRegday(Date regday) {
-        this.regday = regday;
-    }
+	public void setRegday(String regday) {
+		this.regday = regday;
+	}
 
     public String getCharacter() {
         return character;

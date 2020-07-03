@@ -5,7 +5,7 @@
         <id column="Id" jdbcType="INTEGER" property="id"/>
         <result column="name" jdbcType="VARCHAR" property="name"/>
         <result column="code" jdbcType="VARCHAR" property="code"/>
-        <result column="regday" jdbcType="TIMESTAMP" property="regday"/>
+        <result column="regday" jdbcType="VARCHAR" property="regday"/>
         <result column="character" jdbcType="VARCHAR" property="character"/>
         <result column="legalRepresentative" jdbcType="VARCHAR" property="legalrepresentative"/>
         <result column="capital" jdbcType="VARCHAR" property="capital"/>
@@ -75,8 +75,8 @@
         </where>
     </sql>
     <sql id="Base_Column_List">
-        Id, `name`, code, regday, `character`, legalRepresentative, capital, businessScope,
-    province, city, address
+        "Id", "name", "code", "regday", "character", "legalRepresentative", "capital", "businessScope",
+    "province", "city", "address"
     </sql>
     <select id="selectByExample" parameterType="tk.ddvudo.Mybatis.JavaBeans.EnterpriseExample"
             resultMap="BaseResultMap">
@@ -85,7 +85,7 @@
             distinct
         </if>
         <include refid="Base_Column_List"/>
-        from Enterprise_all
+        from enterprise_registration
         <if test="_parameter != null">
             <include refid="Example_Where_Clause"/>
         </if>
@@ -108,7 +108,7 @@
             distinct
         </if>
         <include refid="Base_Column_List"/>
-        from Enterprise_all
+        from enterprise_registration
         <if test="_parameter != null">
             <include refid="Example_Where_Clause"/>
         </if>
@@ -125,13 +125,13 @@
         </if>
     </select>
     <select id="selectByExample_Map_Forward" parameterType="tk.ddvudo.Mybatis.JavaBeans.EnterpriseExample"
-            resultMap="BaseResultMap" resultSetType="FORWARD_ONLY" fetchSize="-2147483648">
+            resultMap="BaseResultMap" resultSetType="FORWARD_ONLY" fetchSize="100">
         select
         <if test="distinct">
             distinct
         </if>
         <include refid="Base_Column_List"/>
-        from Enterprise_all
+        from enterprise_registration
         <if test="_parameter != null">
             <include refid="Example_Where_Clause"/>
         </if>
@@ -140,7 +140,7 @@
         </if>
         <if test="limit != null">
             <if test="offset != null">
-                limit ${offset}, ${limit}
+                offset ${offset} limit ${limit}
             </if>
             <if test="offset == null">
                 limit ${limit}
@@ -150,32 +150,32 @@
     <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
-        from Enterprise_all
+        from enterprise_registration
         where Id = #{id,jdbcType=INTEGER}
     </select>
     <select id="selectByPrimaryKey_Map" parameterType="java.lang.Integer" resultType="java.util.HashMap">
         select
         <include refid="Base_Column_List"/>
-        from Enterprise_all
+        from enterprise_registration
         where Id = #{id,jdbcType=INTEGER}
     </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
         delete
-        from Enterprise_all
+        from enterprise_registration
         where Id = #{id,jdbcType=INTEGER}
     </delete>
     <delete id="deleteByExample" parameterType="tk.ddvudo.Mybatis.JavaBeans.EnterpriseExample">
-        delete from Enterprise_all
+        delete from enterprise_registration
         <if test="_parameter != null">
             <include refid="Example_Where_Clause"/>
         </if>
     </delete>
     <insert id="insert" keyColumn="Id" keyProperty="id" parameterType="tk.ddvudo.Mybatis.JavaBeans.Enterprise"
             useGeneratedKeys="true">
-        insert into Enterprise_all (`name`, code, regday,
-                                    `character`, legalRepresentative, capital,
-                                    businessScope, province, city,
-                                    address)
+        insert into enterprise_registration (`name`, code, regday,
+                                             `character`, legalRepresentative, capital,
+                                             businessScope, province, city,
+                                             address)
         values (#{name,jdbcType=VARCHAR}, #{code,jdbcType=VARCHAR}, #{regday,jdbcType=TIMESTAMP},
                 #{character,jdbcType=VARCHAR}, #{legalrepresentative,jdbcType=VARCHAR}, #{capital,jdbcType=VARCHAR},
                 #{businessscope,jdbcType=VARCHAR}, #{province,jdbcType=VARCHAR}, #{city,jdbcType=VARCHAR},
@@ -183,7 +183,7 @@
     </insert>
     <insert id="insertSelective" keyColumn="Id" keyProperty="id" parameterType="tk.ddvudo.Mybatis.JavaBeans.Enterprise"
             useGeneratedKeys="true">
-        insert into Enterprise_all
+        insert into enterprise_registration
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="name != null">
                 `name`,
@@ -251,13 +251,13 @@
     </insert>
     <select id="countByExample" parameterType="tk.ddvudo.Mybatis.JavaBeans.EnterpriseExample"
             resultType="java.lang.Long">
-        select count(*) from Enterprise_all
+        select count(*) from enterprise_registration
         <if test="_parameter != null">
             <include refid="Example_Where_Clause"/>
         </if>
     </select>
     <update id="updateByExampleSelective" parameterType="map">
-        update Enterprise_all
+        update enterprise_registration
         <set>
             <if test="record.id != null">
                 Id = #{record.id,jdbcType=INTEGER},
@@ -298,7 +298,7 @@
         </if>
     </update>
     <update id="updateByExample" parameterType="map">
-        update Enterprise_all
+        update enterprise_registration
         set Id = #{record.id,jdbcType=INTEGER},
         `name` = #{record.name,jdbcType=VARCHAR},
         code = #{record.code,jdbcType=VARCHAR},
@@ -315,7 +315,7 @@
         </if>
     </update>
     <update id="updateByPrimaryKeySelective" parameterType="tk.ddvudo.Mybatis.JavaBeans.Enterprise">
-        update Enterprise_all
+        update enterprise_registration
         <set>
             <if test="name != null">
                 `name` = #{name,jdbcType=VARCHAR},
@@ -351,7 +351,7 @@
         where Id = #{id,jdbcType=INTEGER}
     </update>
     <update id="updateByPrimaryKey" parameterType="tk.ddvudo.Mybatis.JavaBeans.Enterprise">
-        update Enterprise_all
+        update enterprise_registration
         set `name`              = #{name,jdbcType=VARCHAR},
             code                = #{code,jdbcType=VARCHAR},
             regday              = #{regday,jdbcType=TIMESTAMP},
