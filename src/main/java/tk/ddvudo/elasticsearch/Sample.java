@@ -35,7 +35,6 @@ public class Sample {
 		EnterpriseDao enterpriseDao = session.getMapper(EnterpriseDao.class);
 		EnterpriseExample example = new EnterpriseExample();
 		example.setOrderByClause("\"Id\"");
-		example.setOffset((long) 250500);
 //		example.setLimit(50000);
 		myResultHandler<Enterprise> resultHandler = new myResultHandler<>();
 		enterpriseDao.selectByExample_Map_Forward(example, resultHandler);
